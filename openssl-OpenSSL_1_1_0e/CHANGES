@@ -5991,7 +5991,7 @@
      when it's 512 *bits* long, not 512 bytes.
      [Richard Levitte]
 
-  *) Change AES_cbc_encrypt_duplicate() so it outputs exact multiple of
+  *) Change AES_cbc_encrypt2() so it outputs exact multiple of
      blocks during encryption.
      [Richard Levitte]
 
@@ -12182,7 +12182,7 @@ des-cbc           3624.96k     5258.21k     5530.91k     5624.30k     5628.26k
      SSL_CTX_set_tmp_{rsa,dh}_callback().
      [Ben Laurie]
 
-  *) Make DH_free() tolerate being passed a NULL pointer (like RSA_free_duplicate() and
+  *) Make DH_free() tolerate being passed a NULL pointer (like RSA_free2() and
      DSA_free()). Make X509_PUBKEY_set() check for errors in d2i_PublicKey().
      [Steve Henson]
 

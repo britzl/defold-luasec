@@ -215,7 +215,7 @@ int RSA_public_decrypt(int flen, const unsigned char *from,
                        unsigned char *to, RSA *rsa, int padding);
 int RSA_private_decrypt(int flen, const unsigned char *from,
                         unsigned char *to, RSA *rsa, int padding);
-void RSA_free_duplicate(RSA *r);
+void RSA_free2(RSA *r);
 /* "up" the RSA object's reference count */
 int RSA_up_ref(RSA *r);
 

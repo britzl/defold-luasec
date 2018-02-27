@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-RSA_new, RSA_free_duplicate - allocate and free RSA objects
+RSA_new, RSA_free2 - allocate and free RSA objects
 
 =head1 SYNOPSIS
 
@@ -10,14 +10,14 @@ RSA_new, RSA_free_duplicate - allocate and free RSA objects
 
  RSA * RSA_new(void);
 
- void RSA_free_duplicate(RSA *rsa);
+ void RSA_free2(RSA *rsa);
 
 =head1 DESCRIPTION
 
 RSA_new() allocates and initializes an B<RSA> structure. It is equivalent to
 calling RSA_new_method(NULL).
 
-RSA_free_duplicate() frees the B<RSA> structure and its components. The key is
+RSA_free2() frees the B<RSA> structure and its components. The key is
 erased before the memory is returned to the system.
 If B<rsa> is NULL nothing is done.
 
@@ -27,7 +27,7 @@ If the allocation fails, RSA_new() returns B<NULL> and sets an error
 code that can be obtained by L<ERR_get_error(3)>. Otherwise it returns
 a pointer to the newly allocated structure.
 
-RSA_free_duplicate() returns no value.
+RSA_free2() returns no value.
 
 =head1 SEE ALSO
 

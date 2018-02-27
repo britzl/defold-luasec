@@ -54,7 +54,7 @@ RSA *RSA_generate_key(int bits, unsigned long e_value,
     }
  err:
     BN_free(e);
-    RSA_free_duplicate(rsa);
+    RSA_free2(rsa);
     BN_GENCB_free(cb);
     return 0;
 }

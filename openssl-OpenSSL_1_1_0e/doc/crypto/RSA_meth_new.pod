@@ -178,7 +178,7 @@ NULL.
 RSA_meth_get_finish() and RSA_meth_set_finish() get and set the
 function used for destroying an instance of an RSA object respectively.
 This function will be called in response to the application calling
-RSA_free_duplicate(). A pointer to the RSA to be destroyed is passed as a
+RSA_free2(). A pointer to the RSA to be destroyed is passed as a
 parameter. The destroy function should be used for RSA implementation
 specific clean up. The memory for the RSA itself should not be freed
 by this function. This function may be NULL.

@@ -1633,7 +1633,7 @@ $code.=<<___;
 .size	AES_set_decrypt_key,.-AES_set_decrypt_key
 ___
 
-# void AES_cbc_encrypt_duplicate (const void char *inp, unsigned char *out,
+# void AES_cbc_encrypt2 (const void char *inp, unsigned char *out,
 #			size_t length, const AES_KEY *key,
 #			unsigned char *ivp,const int enc);
 {
@@ -1652,14 +1652,14 @@ my $aes_key="80(%rsp)";		# copy of aes_key
 my $mark="80+240(%rsp)";	# copy of aes_key->rounds
 
 $code.=<<___;
-.globl	AES_cbc_encrypt_duplicate
-.type	AES_cbc_encrypt_duplicate,\@function,6
+.globl	AES_cbc_encrypt2
+.type	AES_cbc_encrypt2,\@function,6
 .align	16
 .extern	OPENSSL_ia32cap_P
-.globl	asm_AES_cbc_encrypt_duplicate
-.hidden	asm_AES_cbc_encrypt_duplicate
-asm_AES_cbc_encrypt_duplicate:
-AES_cbc_encrypt_duplicate:
+.globl	asm_AES_cbc_encrypt2
+.hidden	asm_AES_cbc_encrypt2
+asm_AES_cbc_encrypt2:
+AES_cbc_encrypt2:
 	cmp	\$0,%rdx	# check length
 	je	.Lcbc_epilogue
 	pushfq
@@ -2108,7 +2108,7 @@ AES_cbc_encrypt_duplicate:
 	popfq
 .Lcbc_epilogue:
 	ret
-.size	AES_cbc_encrypt_duplicate,.-AES_cbc_encrypt_duplicate
+.size	AES_cbc_encrypt2,.-AES_cbc_encrypt2
 ___
 }
 
@@ -2785,9 +2785,9 @@ cbc_se_handler:
 	.rva	.LSEH_end_AES_set_decrypt_key
 	.rva	.LSEH_info_AES_set_decrypt_key
 
-	.rva	.LSEH_begin_AES_cbc_encrypt_duplicate
-	.rva	.LSEH_end_AES_cbc_encrypt_duplicate
-	.rva	.LSEH_info_AES_cbc_encrypt_duplicate
+	.rva	.LSEH_begin_AES_cbc_encrypt2
+	.rva	.LSEH_end_AES_cbc_encrypt2
+	.rva	.LSEH_info_AES_cbc_encrypt2
 
 .section	.xdata
 .align	8
@@ -2807,7 +2807,7 @@ cbc_se_handler:
 	.byte	9,0,0,0
 	.rva	key_se_handler
 	.rva	.Ldec_key_prologue,.Ldec_key_epilogue	# HandlerData[]
-.LSEH_info_AES_cbc_encrypt_duplicate:
+.LSEH_info_AES_cbc_encrypt2:
 	.byte	9,0,0,0
 	.rva	cbc_se_handler
 ___

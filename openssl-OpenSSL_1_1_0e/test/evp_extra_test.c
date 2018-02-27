@@ -207,7 +207,7 @@ static EVP_PKEY *load_example_rsa_key(void)
 
  out:
     EVP_PKEY_free(pkey);
-    RSA_free_duplicate(rsa);
+    RSA_free2(rsa);
 
     return ret;
 }

@@ -331,7 +331,7 @@ int main(int argc, char *argv[])
         }
 
  next:
-        RSA_free_duplicate(key);
+        RSA_free2(key);
     }
 
 #ifndef OPENSSL_NO_CRYPTO_MDEBUG

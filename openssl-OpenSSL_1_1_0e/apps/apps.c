@@ -788,7 +788,7 @@ EVP_PKEY *load_pubkey(const char *file, int format, int maybe_stdin,
             pkey = EVP_PKEY_new();
             if (pkey != NULL)
                 EVP_PKEY_set1_RSA(pkey, rsa);
-            RSA_free_duplicate(rsa);
+            RSA_free2(rsa);
         } else
 #else
         BIO_printf(bio_err, "RSA keys not supported\n");
@@ -804,7 +804,7 @@ EVP_PKEY *load_pubkey(const char *file, int format, int maybe_stdin,
             pkey = EVP_PKEY_new();
             if (pkey != NULL)
                 EVP_PKEY_set1_RSA(pkey, rsa);
-            RSA_free_duplicate(rsa);
+            RSA_free2(rsa);
         } else
 #else
         BIO_printf(bio_err, "RSA keys not supported\n");

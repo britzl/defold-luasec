@@ -53,7 +53,7 @@
 # This is done, because deferred key setup can't be made MT-safe, not
 # for keys longer than 128 bits.
 #
-# Add AES_cbc_encrypt_duplicate, which gives incredible performance improvement,
+# Add AES_cbc_encrypt2, which gives incredible performance improvement,
 # it was measured to be ~6.6x. It's less than previously mentioned 8x,
 # because software implementation was optimized.
 
@@ -1177,7 +1177,7 @@ $code.=<<___;
 ___
 
 ########################################################################
-# void AES_cbc_encrypt_duplicate(const unsigned char *in, unsigned char *out,
+# void AES_cbc_encrypt2(const unsigned char *in, unsigned char *out,
 #                     size_t length, const AES_KEY *key,
 #                     unsigned char *ivec, const int enc)
 {
@@ -1188,10 +1188,10 @@ my $key="%r5";
 my $ivp="%r6";
 
 $code.=<<___;
-.globl	AES_cbc_encrypt_duplicate
-.type	AES_cbc_encrypt_duplicate,\@function
+.globl	AES_cbc_encrypt2
+.type	AES_cbc_encrypt2,\@function
 .align	16
-AES_cbc_encrypt_duplicate:
+AES_cbc_encrypt2:
 	xgr	%r3,%r4		# flip %r3 and %r4, out and len
 	xgr	%r4,%r3
 	xgr	%r3,%r4
@@ -1375,7 +1375,7 @@ $code.=<<___;
 	mvc	0(1,$out),16*$SIZE_T($sp)
 4:	ex	$len,0($s1)
 	j	.Lcbc_dec_exit
-.size	AES_cbc_encrypt_duplicate,.-AES_cbc_encrypt_duplicate
+.size	AES_cbc_encrypt2,.-AES_cbc_encrypt2
 ___
 }
 ########################################################################

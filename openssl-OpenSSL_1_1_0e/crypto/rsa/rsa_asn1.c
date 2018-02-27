@@ -24,7 +24,7 @@ static int rsa_cb(int operation, ASN1_VALUE **pval, const ASN1_ITEM *it,
             return 2;
         return 0;
     } else if (operation == ASN1_OP_FREE_PRE) {
-        RSA_free_duplicate((RSA *)*pval);
+        RSA_free2((RSA *)*pval);
         *pval = NULL;
         return 2;
     }
