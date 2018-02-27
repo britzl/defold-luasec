@@ -1,0 +1,6 @@
+local digest_server = require "tests.digest.server"
+
+function init(self)
+	print("starting server")
+	digest_server.test()
+end

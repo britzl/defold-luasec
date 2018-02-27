@@ -1,0 +1,6 @@
+local digest_client = require "tests.digest.client"
+
+function init(self)
+	print("starting client")
+	digest_client.test()
+end

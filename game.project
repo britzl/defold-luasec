@@ -9,3 +9,6 @@ shared_state = 1
 [library]
 include_dirs = luasec
 
+[bootstrap]
+main_collection = /tests/client.collectionc
+
