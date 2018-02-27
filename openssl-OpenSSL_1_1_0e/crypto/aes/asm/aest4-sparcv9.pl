@@ -79,7 +79,7 @@ $output = pop;
 open STDOUT,">$output";
 
 $::evp=1;	# if $evp is set to 0, script generates module with
-# AES_[en|de]crypt, AES_set_[en|de]crypt_key and AES_cbc_encrypt entry
+# AES_[en|de]crypt, AES_set_[en|de]crypt_key and AES_cbc_encrypt_duplicate entry
 # points. These however are not fully compatible with openssl/aes.h,
 # because they expect AES_KEY to be aligned at 64-bit boundary. When
 # used through EVP, alignment is arranged at EVP layer. Second thing
@@ -893,9 +893,9 @@ ___
 my ($inp,$out,$len,$key,$ivec,$enc)=map("%o$_",(0..5));
 
 $code.=<<___;
-.globl	AES_cbc_encrypt
+.globl	AES_cbc_encrypt_duplicate
 .align	32
-AES_cbc_encrypt:
+AES_cbc_encrypt_duplicate:
 	ld		[$key + 240], %g1
 	nop
 	brz		$enc, .Lcbc_decrypt
@@ -915,8 +915,8 @@ AES_cbc_encrypt:
 	nop
 	ba		aes256_t4_cbc_decrypt
 	nop
-.type	AES_cbc_encrypt,#function
-.size	AES_cbc_encrypt,.-AES_cbc_encrypt
+.type	AES_cbc_encrypt_duplicate,#function
+.size	AES_cbc_encrypt_duplicate,.-AES_cbc_encrypt_duplicate
 ___
 }
 $code.=<<___;

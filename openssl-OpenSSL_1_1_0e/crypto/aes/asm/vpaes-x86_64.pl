@@ -21,7 +21,7 @@
 # September 2011.
 #
 # Interface to OpenSSL as "almost" drop-in replacement for
-# aes-x86_64.pl. "Almost" refers to the fact that AES_cbc_encrypt
+# aes-x86_64.pl. "Almost" refers to the fact that AES_cbc_encrypt_duplicate
 # doesn't handle partial vectors (doesn't have to if called from
 # EVP only). "Drop-in" implies that this module doesn't share key
 # schedule structure with the original nor does it make assumption
@@ -866,7 +866,7 @@ $code.=<<___;
 ___
 {
 my ($inp,$out,$len,$key,$ivp,$enc)=("%rdi","%rsi","%rdx","%rcx","%r8","%r9");
-# void AES_cbc_encrypt (const void char *inp, unsigned char *out,
+# void AES_cbc_encrypt_duplicate (const void char *inp, unsigned char *out,
 #                       size_t length, const AES_KEY *key,
 #                       unsigned char *ivp,const int enc);
 $code.=<<___;

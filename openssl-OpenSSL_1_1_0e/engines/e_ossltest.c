@@ -455,7 +455,7 @@ static int digest_sha1_update(EVP_MD_CTX *ctx, const void *data,
 static int digest_sha1_final(EVP_MD_CTX *ctx, unsigned char *md)
 {
     int ret;
-    ret = SHA1_Final(md, data(ctx));
+    ret = SHA1_Final_duplicate(md, data(ctx));
 
     if (ret > 0) {
         fill_known_data(md, SHA_DIGEST_LENGTH);

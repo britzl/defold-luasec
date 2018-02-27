@@ -127,7 +127,7 @@ static int rsa_security_bits(const EVP_PKEY *pkey)
 
 static void int_rsa_free(EVP_PKEY *pkey)
 {
-    RSA_free(pkey->pkey.rsa);
+    RSA_free_duplicate(pkey->pkey.rsa);
 }
 
 static int do_rsa_print(BIO *bp, const RSA *x, int off, int priv)

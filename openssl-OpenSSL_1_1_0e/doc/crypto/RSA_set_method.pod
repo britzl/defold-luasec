@@ -109,7 +109,7 @@ the default method is used.
      /* called at RSA_new */
         int (*init)(RSA *rsa);
 
-     /* called at RSA_free */
+     /* called at RSA_free_duplicate */
         int (*finish)(RSA *rsa);
 
      /* RSA_FLAG_EXT_PKEY        - rsa_mod_exp is called for private key

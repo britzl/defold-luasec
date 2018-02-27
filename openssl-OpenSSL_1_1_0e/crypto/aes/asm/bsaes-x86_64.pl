@@ -1566,7 +1566,7 @@ $code.=<<___;
 ___
 }
 $code.=<<___;
-.extern	asm_AES_cbc_encrypt
+.extern	asm_AES_cbc_encrypt_duplicate
 .globl	bsaes_cbc_encrypt
 .type	bsaes_cbc_encrypt,\@abi-omnipotent
 .align	16
@@ -1577,9 +1577,9 @@ $code.=<<___ if ($win64);
 ___
 $code.=<<___;
 	cmp	\$0,$arg6
-	jne	asm_AES_cbc_encrypt
+	jne	asm_AES_cbc_encrypt_duplicate
 	cmp	\$128,$arg3
-	jb	asm_AES_cbc_encrypt
+	jb	asm_AES_cbc_encrypt_duplicate
 
 	mov	%rsp, %rax
 .Lcbc_dec_prologue:

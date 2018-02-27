@@ -622,7 +622,7 @@ static int pkey_rsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     if (ctx->pkey_gencb) {
         pcb = BN_GENCB_new();
         if (pcb == NULL) {
-            RSA_free(rsa);
+            RSA_free_duplicate(rsa);
             return 0;
         }
         evp_pkey_set_cb_translate(pcb, ctx);
@@ -633,7 +633,7 @@ static int pkey_rsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     if (ret > 0)
         EVP_PKEY_assign_RSA(pkey, rsa);
     else
-        RSA_free(rsa);
+        RSA_free_duplicate(rsa);
     return ret;
 }
 

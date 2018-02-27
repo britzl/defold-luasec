@@ -797,7 +797,7 @@ static EVP_PKEY *hwcrhk_load_privkey(ENGINE *eng, const char *key_id,
     return res;
  err:
 #  ifndef OPENSSL_NO_RSA
-    RSA_free(rtmp);
+    RSA_free_duplicate(rtmp);
 #  endif
     return NULL;
 }
@@ -826,7 +826,7 @@ static EVP_PKEY *hwcrhk_load_pubkey(ENGINE *eng, const char *key_id,
                 rsa->n = NULL;
                 rsa->e = NULL;
                 CRYPTO_THREAD_unlock(chil_lock);
-                RSA_free(rsa);
+                RSA_free_duplicate(rsa);
             }
             break;
 #  endif

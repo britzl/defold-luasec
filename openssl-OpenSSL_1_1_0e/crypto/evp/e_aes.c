@@ -154,7 +154,7 @@ void AES_xts_decrypt(const char *inp, char *out, size_t len,
 # define HWAES_set_decrypt_key aes_p8_set_decrypt_key
 # define HWAES_encrypt aes_p8_encrypt
 # define HWAES_decrypt aes_p8_decrypt
-# define HWAES_cbc_encrypt aes_p8_cbc_encrypt
+# define HWAES_cbc_encrypt_duplicate aes_p8_cbc_encrypt
 # define HWAES_ctr32_encrypt_blocks aes_p8_ctr32_encrypt_blocks
 # define HWAES_xts_encrypt aes_p8_xts_encrypt
 # define HWAES_xts_decrypt aes_p8_xts_decrypt
@@ -556,7 +556,7 @@ extern unsigned int OPENSSL_sparcv9cap_P[];
 # define HWAES_set_decrypt_key aes_fx_set_decrypt_key
 # define HWAES_encrypt aes_fx_encrypt
 # define HWAES_decrypt aes_fx_decrypt
-# define HWAES_cbc_encrypt aes_fx_cbc_encrypt
+# define HWAES_cbc_encrypt_duplicate aes_fx_cbc_encrypt
 # define HWAES_ctr32_encrypt_blocks aes_fx_ctr32_encrypt_blocks
 
 # define SPARC_AES_CAPABLE       (OPENSSL_sparcv9cap_P[1] & CFR_AES)
@@ -993,7 +993,7 @@ const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
 #  define HWAES_set_decrypt_key aes_v8_set_decrypt_key
 #  define HWAES_encrypt aes_v8_encrypt
 #  define HWAES_decrypt aes_v8_decrypt
-#  define HWAES_cbc_encrypt aes_v8_cbc_encrypt
+#  define HWAES_cbc_encrypt_duplicate aes_v8_cbc_encrypt
 #  define HWAES_ctr32_encrypt_blocks aes_v8_ctr32_encrypt_blocks
 # endif
 #endif
@@ -1007,7 +1007,7 @@ void HWAES_encrypt(const unsigned char *in, unsigned char *out,
                    const AES_KEY *key);
 void HWAES_decrypt(const unsigned char *in, unsigned char *out,
                    const AES_KEY *key);
-void HWAES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void HWAES_cbc_encrypt_duplicate(const unsigned char *in, unsigned char *out,
                        size_t length, const AES_KEY *key,
                        unsigned char *ivec, const int enc);
 void HWAES_ctr32_encrypt_blocks(const unsigned char *in, unsigned char *out,
@@ -1046,9 +1046,9 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                                         &dat->ks.ks);
             dat->block = (block128_f) HWAES_decrypt;
             dat->stream.cbc = NULL;
-# ifdef HWAES_cbc_encrypt
+# ifdef HWAES_cbc_encrypt_duplicate
             if (mode == EVP_CIPH_CBC_MODE)
-                dat->stream.cbc = (cbc128_f) HWAES_cbc_encrypt;
+                dat->stream.cbc = (cbc128_f) HWAES_cbc_encrypt_duplicate;
 # endif
         } else
 #endif
@@ -1076,7 +1076,7 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                                       &dat->ks.ks);
             dat->block = (block128_f) AES_decrypt;
             dat->stream.cbc = mode == EVP_CIPH_CBC_MODE ?
-                (cbc128_f) AES_cbc_encrypt : NULL;
+                (cbc128_f) AES_cbc_encrypt_duplicate : NULL;
         }
     } else
 #ifdef HWAES_CAPABLE
@@ -1085,9 +1085,9 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                                     &dat->ks.ks);
         dat->block = (block128_f) HWAES_encrypt;
         dat->stream.cbc = NULL;
-# ifdef HWAES_cbc_encrypt
+# ifdef HWAES_cbc_encrypt_duplicate
         if (mode == EVP_CIPH_CBC_MODE)
-            dat->stream.cbc = (cbc128_f) HWAES_cbc_encrypt;
+            dat->stream.cbc = (cbc128_f) HWAES_cbc_encrypt_duplicate;
         else
 # endif
 # ifdef HWAES_ctr32_encrypt_blocks
@@ -1120,7 +1120,7 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                                   &dat->ks.ks);
         dat->block = (block128_f) AES_encrypt;
         dat->stream.cbc = mode == EVP_CIPH_CBC_MODE ?
-            (cbc128_f) AES_cbc_encrypt : NULL;
+            (cbc128_f) AES_cbc_encrypt_duplicate : NULL;
 #ifdef AES_CTR_ASM
         if (mode == EVP_CIPH_CTR_MODE)
             dat->stream.ctr = (ctr128_f) AES_ctr32_encrypt;

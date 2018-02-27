@@ -349,7 +349,7 @@ static EVP_PKEY *b2i_rsa(const unsigned char **in,
     RSA_set0_key(rsa, n, e, d);
 
     EVP_PKEY_set1_RSA(ret, rsa);
-    RSA_free(rsa);
+    RSA_free_duplicate(rsa);
     *in = pin;
     return ret;
  memerr:
@@ -362,7 +362,7 @@ static EVP_PKEY *b2i_rsa(const unsigned char **in,
     BN_free(dmq1);
     BN_free(iqmp);
     BN_free(d);
-    RSA_free(rsa);
+    RSA_free_duplicate(rsa);
     EVP_PKEY_free(ret);
     return NULL;
 }

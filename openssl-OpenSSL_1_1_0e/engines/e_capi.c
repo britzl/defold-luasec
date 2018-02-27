@@ -772,7 +772,7 @@ static EVP_PKEY *capi_get_pkey(ENGINE *eng, CAPI_KEY * key)
  err:
     OPENSSL_free(pubkey);
     if (!ret) {
-        RSA_free(rkey);
+        RSA_free_duplicate(rkey);
 # ifndef OPENSSL_NO_DSA
         DSA_free(dkey);
 # endif

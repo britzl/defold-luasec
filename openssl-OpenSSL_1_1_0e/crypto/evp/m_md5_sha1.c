@@ -44,7 +44,7 @@ static int final(EVP_MD_CTX *ctx, unsigned char *md)
     struct md5_sha1_ctx *mctx = EVP_MD_CTX_md_data(ctx);
     if (!MD5_Final(md, &mctx->md5))
         return 0;
-    return SHA1_Final(md + MD5_DIGEST_LENGTH, &mctx->sha1);
+    return SHA1_Final_duplicate(md + MD5_DIGEST_LENGTH, &mctx->sha1);
 }
 
 static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
@@ -85,7 +85,7 @@ static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
     if (!SHA1_Update(&mctx->sha1, padtmp, 40))
         return 0;
 
-    if (!SHA1_Final(sha1tmp, &mctx->sha1))
+    if (!SHA1_Final_duplicate(sha1tmp, &mctx->sha1))
         return 0;
 
     /* Reinitialise context */

@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
             RC4(&key, sizeof(buf), buf, buf);
             SHA1_Update(&c, buf, sizeof(buf));
         }
-        SHA1_Final(md, &c);
+        SHA1_Final_duplicate(md, &c);
 
         if (memcmp(md, expected, sizeof(md))) {
             printf("error in RC4 bulk test\n");

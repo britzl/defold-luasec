@@ -10,7 +10,7 @@
 #include <openssl/aes.h>
 #include <openssl/modes.h>
 
-void AES_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void AES_cbc_encrypt_duplicate(const unsigned char *in, unsigned char *out,
                      size_t len, const AES_KEY *key,
                      unsigned char *ivec, const int enc)
 {

@@ -28,7 +28,7 @@ static int update(EVP_MD_CTX *ctx, const void *data, size_t count)
 
 static int final(EVP_MD_CTX *ctx, unsigned char *md)
 {
-    return SHA1_Final(md, EVP_MD_CTX_md_data(ctx));
+    return SHA1_Final_duplicate(md, EVP_MD_CTX_md_data(ctx));
 }
 
 static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
@@ -63,7 +63,7 @@ static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
     if (!SHA1_Update(sha1, padtmp, sizeof(padtmp)))
         return 0;
 
-    if (!SHA1_Final(sha1tmp, sha1))
+    if (!SHA1_Final_duplicate(sha1tmp, sha1))
         return 0;
 
     /* Reinitialise context */

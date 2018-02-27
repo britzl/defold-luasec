@@ -426,7 +426,7 @@ void test_vector(const unsigned char *vector, size_t len)
     /* test streamed encryption */
     memcpy(iv, test_iv, sizeof(test_iv));
     CRYPTO_cts128_encrypt(test_input, ciphertext, len, &encks, iv,
-                          (cbc128_f) AES_cbc_encrypt);
+                          (cbc128_f) AES_cbc_encrypt_duplicate);
     if (memcmp(ciphertext, vector, len))
         fprintf(stderr, "output_%d mismatch\n", len), exit(3);
     if (memcmp(iv, vector + len - tail, sizeof(iv)))
@@ -435,7 +435,7 @@ void test_vector(const unsigned char *vector, size_t len)
     /* test streamed decryption */
     memcpy(iv, test_iv, sizeof(test_iv));
     CRYPTO_cts128_decrypt(ciphertext, cleartext, len, &decks, iv,
-                          (cbc128_f) AES_cbc_encrypt);
+                          (cbc128_f) AES_cbc_encrypt_duplicate);
     if (memcmp(cleartext, test_input, len))
         fprintf(stderr, "input_%d mismatch\n", len), exit(4);
     if (memcmp(iv, vector + len - tail, sizeof(iv)))
@@ -483,7 +483,7 @@ void test_nistvector(const unsigned char *vector, size_t len)
     /* test streamed encryption */
     memcpy(iv, test_iv, sizeof(test_iv));
     CRYPTO_nistcts128_encrypt(test_input, ciphertext, len, &encks, iv,
-                              (cbc128_f) AES_cbc_encrypt);
+                              (cbc128_f) AES_cbc_encrypt_duplicate);
     if (memcmp(ciphertext, nistvector, len))
         fprintf(stderr, "output_%d mismatch\n", len), exit(3);
     if (memcmp(iv, nistvector + len - tail, sizeof(iv)))
@@ -492,7 +492,7 @@ void test_nistvector(const unsigned char *vector, size_t len)
     /* test streamed decryption */
     memcpy(iv, test_iv, sizeof(test_iv));
     CRYPTO_nistcts128_decrypt(ciphertext, cleartext, len, &decks, iv,
-                              (cbc128_f) AES_cbc_encrypt);
+                              (cbc128_f) AES_cbc_encrypt_duplicate);
     if (memcmp(cleartext, test_input, len))
         fprintf(stderr, "input_%d mismatch\n", len), exit(4);
     if (memcmp(iv, nistvector + len - tail, sizeof(iv)))

@@ -330,7 +330,7 @@ static int test_sha1_final(EVP_MD_CTX *ctx, unsigned char *md)
 # ifdef TEST_ENG_OPENSSL_SHA_P_FINAL
     fprintf(stderr, "(TEST_ENG_OPENSSL_SHA) test_sha1_final() called\n");
 # endif
-    return SHA1_Final(md, EVP_MD_CTX_md_data(ctx));
+    return SHA1_Final_duplicate(md, EVP_MD_CTX_md_data(ctx));
 }
 
 static EVP_MD *sha1_md = NULL;

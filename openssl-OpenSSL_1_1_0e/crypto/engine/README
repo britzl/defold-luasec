@@ -62,7 +62,7 @@ they are available *because* they're part of a giant ENGINE called "openssl".
 Ie. all implementations *have* to come from an ENGINE, but we get round that by
 having a giant ENGINE with all the software support encapsulated. This creates
 linker hassles if nothing else - linking a 1-line application that calls 2 basic
-RSA functions (eg. "RSA_free(RSA_new());") will result in large quantities of
+RSA functions (eg. "RSA_free_duplicate(RSA_new());") will result in large quantities of
 ENGINE code being linked in *and* because of that DSA, DH, and RAND also. If we
 continue with this approach for EVP_CIPHER support (even if it *was* possible)
 we would lose our ability to link selectively by selectively loading certain

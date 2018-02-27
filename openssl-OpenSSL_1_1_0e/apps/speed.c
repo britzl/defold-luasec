@@ -784,7 +784,7 @@ static int AES_cbc_128_encrypt_loop(void *args)
     unsigned char *buf = tempargs->buf;
     int count;
     for (count = 0; COND(c[D_CBC_128_AES][testnum]); count++)
-        AES_cbc_encrypt(buf, buf,
+        AES_cbc_encrypt_duplicate(buf, buf,
                 (size_t)lengths[testnum], &aes_ks1,
                 iv, AES_ENCRYPT);
     return count;
@@ -796,7 +796,7 @@ static int AES_cbc_192_encrypt_loop(void *args)
     unsigned char *buf = tempargs->buf;
     int count;
     for (count = 0; COND(c[D_CBC_192_AES][testnum]); count++)
-        AES_cbc_encrypt(buf, buf,
+        AES_cbc_encrypt_duplicate(buf, buf,
                 (size_t)lengths[testnum], &aes_ks2,
                 iv, AES_ENCRYPT);
     return count;
@@ -808,7 +808,7 @@ static int AES_cbc_256_encrypt_loop(void *args)
     unsigned char *buf = tempargs->buf;
     int count;
     for (count = 0; COND(c[D_CBC_256_AES][testnum]); count++)
-        AES_cbc_encrypt(buf, buf,
+        AES_cbc_encrypt_duplicate(buf, buf,
                 (size_t)lengths[testnum], &aes_ks3,
                 iv, AES_ENCRYPT);
     return count;
@@ -2788,7 +2788,7 @@ int speed_main(int argc, char **argv)
 
 #ifndef OPENSSL_NO_RSA
         for (k = 0; k < RSA_NUM; k++)
-            RSA_free(loopargs[i].rsa_key[k]);
+            RSA_free_duplicate(loopargs[i].rsa_key[k]);
 #endif
 #ifndef OPENSSL_NO_DSA
         for (k = 0; k < DSA_NUM; k++)

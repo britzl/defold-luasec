@@ -231,7 +231,7 @@ RSA *d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length)
         return NULL;
     *pp = q;
     if (a) {
-        RSA_free(*a);
+        RSA_free_duplicate(*a);
         *a = key;
     }
     return key;

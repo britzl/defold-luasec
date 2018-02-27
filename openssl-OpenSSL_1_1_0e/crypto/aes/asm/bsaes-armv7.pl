@@ -1117,7 +1117,7 @@ my ($inp,$out,$len,$key, $ivp,$fp,$rounds)=map("r$_",(0..3,8..10));
 my ($keysched)=("sp");
 
 $code.=<<___;
-.extern AES_cbc_encrypt
+.extern AES_cbc_encrypt_duplicate
 .extern AES_decrypt
 
 .global	bsaes_cbc_encrypt
@@ -1127,10 +1127,10 @@ bsaes_cbc_encrypt:
 #ifndef	__KERNEL__
 	cmp	$len, #128
 #ifndef	__thumb__
-	blo	AES_cbc_encrypt
+	blo	AES_cbc_encrypt_duplicate
 #else
 	bhs	1f
-	b	AES_cbc_encrypt
+	b	AES_cbc_encrypt_duplicate
 1:
 #endif
 #endif

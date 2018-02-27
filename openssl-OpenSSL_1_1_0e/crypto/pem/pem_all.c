@@ -54,7 +54,7 @@ static RSA *pkey_get_rsa(EVP_PKEY *key, RSA **rsa)
     if (!rtmp)
         return NULL;
     if (rsa) {
-        RSA_free(*rsa);
+        RSA_free_duplicate(*rsa);
         *rsa = rtmp;
     }
     return rtmp;

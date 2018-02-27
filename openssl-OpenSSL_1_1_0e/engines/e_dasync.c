@@ -493,7 +493,7 @@ static int dasync_sha1_final(EVP_MD_CTX *ctx, unsigned char *md)
 {
     dummy_pause_job();
 
-    return SHA1_Final(md, data(ctx));
+    return SHA1_Final_duplicate(md, data(ctx));
 }
 
 /*

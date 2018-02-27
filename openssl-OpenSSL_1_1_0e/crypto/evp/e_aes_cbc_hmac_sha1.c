@@ -455,10 +455,10 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                 memcpy(out + aes_off, in + aes_off, plen - aes_off);
 
             /* calculate HMAC and append it to payload */
-            SHA1_Final(out + plen, &key->md);
+            SHA1_Final_duplicate(out + plen, &key->md);
             key->md = key->tail;
             SHA1_Update(&key->md, out + plen, SHA_DIGEST_LENGTH);
-            SHA1_Final(out + plen, &key->md);
+            SHA1_Final_duplicate(out + plen, &key->md);
 
             /* pad the payload|hmac */
             plen += SHA_DIGEST_LENGTH;
@@ -662,7 +662,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 # else
             SHA1_Update(&key->md, out, inp_len);
             res = key->md.num;
-            SHA1_Final(pmac->c, &key->md);
+            SHA1_Final_duplicate(pmac->c, &key->md);
 
             {
                 unsigned int inp_blocks, pad_blocks;
@@ -681,7 +681,7 @@ static int aesni_cbc_hmac_sha1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 # endif
             key->md = key->tail;
             SHA1_Update(&key->md, pmac->c, SHA_DIGEST_LENGTH);
-            SHA1_Final(pmac->c, &key->md);
+            SHA1_Final_duplicate(pmac->c, &key->md);
 
             /* verify HMAC */
             out += inp_len;
@@ -776,7 +776,7 @@ static int aesni_cbc_hmac_sha1_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
             if (arg > (int)sizeof(hmac_key)) {
                 SHA1_Init(&key->head);
                 SHA1_Update(&key->head, ptr, arg);
-                SHA1_Final(hmac_key, &key->head);
+                SHA1_Final_duplicate(hmac_key, &key->head);
             } else {
                 memcpy(hmac_key, ptr, arg);
             }

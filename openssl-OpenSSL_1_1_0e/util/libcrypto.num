@@ -1514,12 +1514,12 @@ ASYNC_get_wait_ctx                      1500	1_1_0	EXIST::FUNCTION:
 ENGINE_set_load_privkey_function        1501	1_1_0	EXIST::FUNCTION:ENGINE
 CRYPTO_ccm128_setiv                     1502	1_1_0	EXIST::FUNCTION:
 PKCS7_dataFinal                         1503	1_1_0	EXIST::FUNCTION:
-SHA1_Final                              1504	1_1_0	EXIST::FUNCTION:
+SHA1_Final_duplicate                              1504	1_1_0	EXIST::FUNCTION:
 i2a_ASN1_STRING                         1505	1_1_0	EXIST::FUNCTION:
 EVP_CIPHER_CTX_rand_key                 1506	1_1_0	EXIST::FUNCTION:
 AES_set_encrypt_key                     1507	1_1_0	EXIST::FUNCTION:
 ASN1_UTCTIME_new                        1508	1_1_0	EXIST::FUNCTION:
-AES_cbc_encrypt                         1509	1_1_0	EXIST::FUNCTION:
+AES_cbc_encrypt_duplicate                         1509	1_1_0	EXIST::FUNCTION:
 OCSP_RESPDATA_free                      1510	1_1_0	EXIST::FUNCTION:OCSP
 EVP_PKEY_asn1_find                      1511	1_1_0	EXIST::FUNCTION:
 d2i_ASN1_GENERALIZEDTIME                1512	1_1_0	EXIST::FUNCTION:
@@ -2317,7 +2317,7 @@ SCT_set1_extensions                     2286	1_1_0	EXIST::FUNCTION:CT
 PKCS12_SAFEBAG_new                      2287	1_1_0	EXIST::FUNCTION:
 TS_TST_INFO_set_nonce                   2288	1_1_0	EXIST::FUNCTION:TS
 PEM_read_ECPrivateKey                   2289	1_1_0	EXIST::FUNCTION:EC,STDIO
-RSA_free                                2290	1_1_0	EXIST::FUNCTION:RSA
+RSA_free_duplicate                                2290	1_1_0	EXIST::FUNCTION:RSA
 X509_CRL_INFO_new                       2291	1_1_0	EXIST::FUNCTION:
 AES_cfb8_encrypt                        2292	1_1_0	EXIST::FUNCTION:
 d2i_ASN1_SEQUENCE_ANY                   2293	1_1_0	EXIST::FUNCTION:
