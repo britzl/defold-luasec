@@ -7,8 +7,8 @@
 * the I/O call fail in the first place. 
 \*=========================================================================*/
 #include <string.h>
-#include <Winsock2.h>
-#include <windows.h>
+#include <WinSock2.h>
+#include <Windows.h>
 
 #include "luasocket/socket.h"
 

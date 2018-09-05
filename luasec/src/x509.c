@@ -10,8 +10,8 @@
 #include <string.h>
 
 #if defined(WIN32)
-#include <ws2tcpip.h>
-//#include <windows.h>
+#include <WS2tcpip.h>
+//#include <Windows.h>
 #else
 #include <sys/types.h>
 #include <sys/socket.h>

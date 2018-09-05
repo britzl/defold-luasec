@@ -24,8 +24,8 @@ platforms:
   
     x86-win32:
         context:
-            libs:       ["Crypt32.Lib"]
+            libs:       ["Crypt32"]
 
     x86_64-win32:
         context:
-            libs:       ["Crypt32.Lib"]
+            libs:       ["Crypt32"]
