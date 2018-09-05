@@ -7,8 +7,8 @@
 #include <float.h>
 
 #ifdef _WIN32
-#include <Winsock2.h>
-#include <windows.h>
+#include <WinSock2.h>
+#include <Windows.h>
 #endif
 
 //#include "lua.h"
