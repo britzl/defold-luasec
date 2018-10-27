@@ -4,7 +4,7 @@ This is the LuaSec module for the [Defold game engine](http://www.defold.com), b
 ## Installation
 You can use LuaSec in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
-https://github.com/sonountaleban/defold-luasec/archive/master.zip
+https://github.com/britzl/defold-luasec/archive/master.zip
 
 ## Usage
 For the usage see the [Brunoos' documentation](https://github.com/brunoos/luasec/wiki) please.
