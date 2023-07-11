@@ -1,7 +1,7 @@
 name: "LuaSec"
 
 platforms:
-    x86_64-osx:
+    osx:
         context:
             frameworks: []
             flags:      ["-w"]
