@@ -6,18 +6,13 @@
 #include <limits.h>
 #include <float.h>
 
-#ifdef _WIN32
-#include <WinSock2.h>
-#include <Windows.h>
-#endif
-
-//#include "lua.h"
-//#include "lauxlib.h"
 #include <dmsdk/sdk.h>
 
 #include "luasocket/timeout.h"
 
-#ifndef _WIN32
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <time.h>
 #include <sys/time.h>
 #endif

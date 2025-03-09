@@ -1,0 +1,66 @@
+local alpn_client = require("tests.alpn.client")
+local alpn_server = require("tests.alpn.server")
+local chain_client = require("tests.chain.client")
+local chain_server = require("tests.chain.server")
+local curve_negotiation_client = require("tests.curve-negotiation.client")
+local curve_negotiation_server = require("tests.curve-negotiation.server")
+
+local digest_client = require("tests.digest.client")
+local digest_server = require("tests.digest.server")
+
+local mappings = {
+	["alpn.client"] = alpn_client,
+	["alpn.server"] = alpn_server,
+	["chain.client"] = chain_client,
+	["chain.server"] = chain_server,
+	["curve-negotiation.client"] = curve_negotiation_client,
+	["curve-negotiation.server"] = curve_negotiation_server,
+
+	["digest.client"] = digest_client,
+	["digest.server"] = digest_server
+}
+
+local click_event = hash("click")
+
+local btns = {}
+local picked_node
+
+local function node_clicked(node)
+	local id = btns[node]
+	local selected_module = mappings[id]
+	if selected_module then
+		selected_module.test()
+	else
+		print("No module registerd with id: " .. id)
+	end
+end
+
+function init(self)
+	for key, _ in pairs(mappings) do
+		btns[gui.get_node(key)] = key
+	end
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == click_event then
+		if action.pressed then
+			for btn, _ in pairs(btns) do
+				if gui.pick_node(btn, action.x, action.y) then
+					picked_node = btn
+				end
+			end
+		elseif action.released then
+			for btn, _ in pairs(btns) do
+				if gui.pick_node(btn, action.x, action.y) and picked_node == btn then
+					node_clicked(picked_node)
+				end
+			end
+			picked_node = nil
+		end
+	end
+end

@@ -9,3 +9,5 @@ build
 builtins
 .internal
 openssl-OpenSSL_1_1_0e/Makefilee
+/.editor_settings
+**.pem

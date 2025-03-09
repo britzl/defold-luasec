@@ -10,5 +10,5 @@ shared_state = 1
 include_dirs = luasec
 
 [bootstrap]
-main_collection = /tests/client.collectionc
+main_collection = /tests/bootstrap.collectionc
 
