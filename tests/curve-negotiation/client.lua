@@ -19,7 +19,7 @@ function client.test()
       verify = {"peer", "fail_if_no_peer_cert"},
       options = {"all"},
       --
-      curve = "P-256:P-384",
+      curveslist = "P-256:P-384",
    }
 
    local peer = socket.tcp()

@@ -19,7 +19,7 @@ function server.test()
       verify = {"peer", "fail_if_no_peer_cert"},
       options = {"all"},
       --
-      curve = "P-384:P-256:P-521",
+      curveslist = "P-384:P-256:P-521",
    }
 
 
