@@ -11,8 +11,8 @@ function M.run()
    local params = {
       mode        = "client",
       protocol    = "tlsv1_2",
-      key         = sys.load_resource(config.certs .. "clientRSAkey.pem"),
-      certificate = sys.load_resource(config.certs .. "clientRSA.pem"),
+      key         = sys.load_resource("/tests/multicert/certs/clientRSAkey.pem"),
+      certificate = sys.load_resource("/tests/multicert/certs/clientRSA.pem"),
       verify      = "none",
       options     = "all",
       ciphers     = "ALL:!ECDSA"

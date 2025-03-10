@@ -15,9 +15,9 @@ function multicertServer.test()
       protocol     = "any",
       certificates = {
          -- Comment line below and 'client-rsa' stop working
-         { certificate = sys.load_resource(config.certs .. "serverRSA.pem"),   key = sys.load_resource(config.certs .. "serverRSAkey.pem")   },
+         { certificate = sys.load_resource("/tests/multicert/certs/serverRSA.pem"),   key = sys.load_resource("/tests/multicert/certs/serverRSAkey.pem")   },
          -- Comment line below and 'client-ecdsa' stop working
-         { certificate = sys.load_resource(config.certs .. "serverECDSA.pem"), key = sys.load_resource(config.certs .. "serverECDSAkey.pem") }
+         { certificate = sys.load_resource("/tests/multicert/certs/serverECDSA.pem"), key = sys.load_resource("/tests/multicert/certs/serverECDSAkey.pem") }
       },
       verify  = "none",
       options = "all"
