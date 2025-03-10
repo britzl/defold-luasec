@@ -23,7 +23,7 @@ function chainServer.test()
 
   local server = socket.tcp()
   server:setoption('reuseaddr', true)
-  assert( server:bind("*", config.serverPort) )
+  assert( server:bind(config.serverBindAddress, config.serverPort) )
   server:listen()
 
   local conn = server:accept()

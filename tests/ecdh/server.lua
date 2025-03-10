@@ -5,37 +5,45 @@ local socket = require("builtins.scripts.socket")
 local ssl    = require("luasec.ssl")
 local config = require("tests.config")
 
-local params = {
-   mode = "server",
-   protocol = "any",
-   key = config.certs .. "serverAkey.pem",
-   certificate = config.certs .. "serverA.pem",
-   cafile = config.certs .. "rootA.pem",
-   verify = {"peer", "fail_if_no_peer_cert"},
-   options = "all",
-   --
-   curve = "secp384r1",
-}
+local ecdhServer = {}
 
-------------------------------------------------------------------------------
-local ctx = assert(ssl.newcontext(params))
+ecdhServer.name = "ecdh.server"
 
-local server = socket.tcp()
-server:setoption('reuseaddr', true)
-assert( server:bind("*", config.serverPort) )
-server:listen()
+function ecdhServer.test()
+  local params = {
+    mode = "server",
+    protocol = "any",
+    key = sys.load_resource(config.certs .. "serverAkey.pem"),
+    certificate = sys.load_resource(config.certs .. "serverA.pem"),
+    cafile = sys.load_resource(config.certs .. "rootA.pem"),
+    verify = {"peer", "fail_if_no_peer_cert"},
+    options = "all",
+    --
+    curve = "secp384r1",
+  }
 
-local peer = server:accept()
+  ------------------------------------------------------------------------------
+  local ctx = assert(ssl.newcontext(params))
 
-peer = assert( ssl.wrap(peer, ctx) )
-assert( peer:dohandshake() )
+  local server = socket.tcp()
+  server:setoption('reuseaddr', true)
+  assert( server:bind(config.serverBindAddress, config.serverPort) )
+  server:listen()
 
-print("--- INFO ---")
-local info = peer:info()
-for k, v in pairs(info) do
-  print(k, v)
+  local peer = server:accept()
+
+  peer = assert( ssl.wrap(peer, ctx) )
+  assert( peer:dohandshake() )
+
+  print("--- INFO ---")
+  local info = peer:info()
+  for k, v in pairs(info) do
+    print(k, v)
+  end
+  print("---")
+
+  peer:close()
+  server:close()
 end
-print("---")
 
-peer:close()
-server:close()
+return ecdhServer

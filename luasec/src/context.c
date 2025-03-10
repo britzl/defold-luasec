@@ -209,11 +209,13 @@ static DH *dhparam_cb(SSL *ssl, int is_export, int keylength)
   lua_pushlightuserdata(L, (void*)ctx);
   lua_gettable(L, -2);
 
+  printf("%s", "Callback invoke");
   /* Invoke the callback */
   lua_pushboolean(L, is_export);
   lua_pushnumber(L, keylength);
   lua_call(L, 2, 1);
 
+  printf("%s", "After Callback invoke");
   /* Load parameters from returned value */
   if (lua_type(L, -1) != LUA_TSTRING) {
     lua_pop(L, 2);  /* Remove values from stack */
@@ -665,6 +667,7 @@ static int set_mode(lua_State *L)
  */
 static int set_dhparam(lua_State *L)
 {
+  printf("%s\n", "0000000000000");
   SSL_CTX *ctx = lsec_checkcontext(L, 1);
   SSL_CTX_set_tmp_dh_callback(ctx, dhparam_cb);
 

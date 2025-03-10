@@ -5,33 +5,42 @@ local socket = require("builtins.scripts.socket")
 local ssl    = require("luasec.ssl")
 local config = require("tests.config")
 
-local params = {
-   mode = "server",
-   protocol = "any",
-   key = config.certs .. "serverAkey.pem",
-   certificate = config.certs .. "serverA.pem",
-   cafile = config.certs .. "rootA.pem",
-   verify = {"peer", "fail_if_no_peer_cert"},
-   options = "all",
-}
+local loopServer = {}
 
--- [[ SSL context 
-local ctx = assert( ssl.newcontext(params) )
---]]
+loopServer.name = "loop.server"
 
-local server = socket.tcp()
-server:setoption('reuseaddr', true)
-assert( server:bind("*", config.serverPort) )
-server:listen()
+function loopServer.test()
+   local params = {
+      mode = "server",
+      protocol = "any",
+      key = sys.load_resource(config.certs .. "serverAkey.pem"),
+      certificate = sys.load_resource(config.certs .. "serverA.pem"),
+      cafile = sys.load_resource(config.certs .. "rootA.pem"),
+      verify = {"peer", "fail_if_no_peer_cert"},
+      options = "all",
+   }
 
-while true do
-   local peer = server:accept()
- 
-   -- [[ SSL wrapper
-   peer = assert( ssl.wrap(peer, ctx) )
-   assert( peer:dohandshake() )
+   -- [[ SSL context 
+   local ctx = assert( ssl.newcontext(params) )
    --]]
 
-   peer:send("loop test\n")
-   peer:close()
+   local server = socket.tcp()
+   server:setoption('reuseaddr', true)
+   assert( server:bind(config.serverBindAddress, config.serverPort) )
+   server:listen()
+
+   while true do
+      local peer = server:accept()
+
+      -- [[ SSL wrapper
+      peer = assert( ssl.wrap(peer, ctx) )
+      assert( peer:dohandshake() )
+      --]]
+
+      peer:send("loop test\n")
+      peer:close()
+   end
+   server:close()
 end
+
+return loopServer

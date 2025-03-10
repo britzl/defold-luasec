@@ -3,11 +3,7 @@
 --
 local socket = require("builtins.scripts.socket")
 local ssl    = require("luasec.ssl")
-
-if not ssl.config.capabilities.psk then
-   print("[ERRO] PSK not available")
-   os.exit(1)
-end
+local config = require("tests.config")
 
 -- @param hint (nil | string)
 -- @param max_identity_len (number)
@@ -19,23 +15,36 @@ local function pskcb(hint, max_identity_len, max_psk_len)
    return "abcd", "1234"
 end
 
-local params = {
-   mode = "client",
-   protocol = "tlsv1_2",
-   psk = pskcb,
-}
+local pskClient = {}
 
-local peer = socket.tcp()
-peer:connect("127.0.0.1", 8888)
+pskClient.name = "psk.client"
 
-peer = assert( ssl.wrap(peer, params) )
-assert(peer:dohandshake())
+function pskClient.test()
+   if not ssl.config.capabilities.psk then
+      print("[ERRO] PSK not available")
+      return
+   end
 
-print("--- INFO ---")
-local info = peer:info()
-for k, v in pairs(info) do
-   print(k, v)
+   local params = {
+      mode = "client",
+      protocol = "tlsv1_2",
+      psk = pskcb,
+   }
+
+   local peer = socket.tcp()
+   peer:connect(config.serverIP, config.serverPort)
+
+   peer = assert( ssl.wrap(peer, params) )
+   assert(peer:dohandshake())
+
+   print("--- INFO ---")
+   local info = peer:info()
+   for k, v in pairs(info) do
+      print(k, v)
+   end
+   print("---")
+
+   peer:close()
 end
-print("---")
 
-peer:close()
+return pskClient

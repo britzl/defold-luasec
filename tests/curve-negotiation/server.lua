@@ -25,7 +25,7 @@ function server.test()
 
    local server = socket.tcp()
    server:setoption('reuseaddr', true)
-   assert( server:bind("*", config.serverPort) )
+   assert( server:bind(config.serverBindAddress, config.serverPort) )
    server:listen()
 
    local peer = server:accept()
@@ -37,6 +37,8 @@ function server.test()
 
    peer:send("oneshot with curve negotiation test\n")
    peer:close()
+
+   server:close()
 end
 
 return server

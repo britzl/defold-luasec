@@ -3,11 +3,7 @@
 --
 local socket = require("builtins.scripts.socket")
 local ssl    = require("luasec.ssl")
-
-if not ssl.config.capabilities.psk then
-   print("[ERRO] PSK not available")
-   os.exit(1)
-end
+local config = require("tests.config")
 
 -- @param identity (string)
 -- @param max_psk_len (number)
@@ -20,41 +16,53 @@ local function pskcb(identity, max_psk_len)
   return nil
 end
 
-local params = {
-   mode = "server",
-   protocol = "any",
-   options = "all",
+local pskServer = {}
 
--- PSK with just a callback
-   psk = pskcb,
+pskServer.name = "psk.server"
 
--- PSK with identity hint
---   psk = {
---      hint = "hintpsksample",
---      callback = pskcb,
---   },
-}
+function pskServer.test()
+   if not ssl.config.capabilities.psk then
+      print("[ERRO] PSK not available")
+      return
+   end
+   local params = {
+      mode = "server",
+      protocol = "any",
+      options = "all",
+
+   -- PSK with just a callback
+      psk = pskcb,
+
+   -- PSK with identity hint
+   --   psk = {
+   --      hint = "hintpsksample",
+   --      callback = pskcb,
+   --   },
+   }
 
 
--- [[ SSL context
-local ctx = assert(ssl.newcontext(params))
---]]
+   -- [[ SSL context
+   local ctx = assert(ssl.newcontext(params))
+   --]]
 
-local server = socket.tcp()
-server:setoption('reuseaddr', true)
-assert( server:bind("127.0.0.1", 8888) )
-server:listen()
+   local server = socket.tcp()
+   server:setoption('reuseaddr', true)
+   assert( server:bind(config.serverBindAddress, config.serverPort) )
+   server:listen()
 
-local peer = server:accept()
-peer = assert( ssl.wrap(peer, ctx) )
-assert( peer:dohandshake() )
+   local peer = server:accept()
+   peer = assert( ssl.wrap(peer, ctx) )
+   assert( peer:dohandshake() )
 
-print("--- INFO ---")
-local info = peer:info()
-for k, v in pairs(info) do
-   print(k, v)
+   print("--- INFO ---")
+   local info = peer:info()
+   for k, v in pairs(info) do
+      print(k, v)
+   end
+   print("---")
+
+   peer:close()
+   server:close()
 end
-print("---")
 
-peer:close()
-server:close()
+return pskServer

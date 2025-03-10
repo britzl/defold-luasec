@@ -1,23 +1,41 @@
-local alpn_client = require("tests.alpn.client")
-local alpn_server = require("tests.alpn.server")
-local chain_client = require("tests.chain.client")
-local chain_server = require("tests.chain.server")
-local curve_negotiation_client = require("tests.curve-negotiation.client")
-local curve_negotiation_server = require("tests.curve-negotiation.server")
-
-local digest_client = require("tests.digest.client")
-local digest_server = require("tests.digest.server")
-
 local mappings = {
-	["alpn.client"] = alpn_client,
-	["alpn.server"] = alpn_server,
-	["chain.client"] = chain_client,
-	["chain.server"] = chain_server,
-	["curve-negotiation.client"] = curve_negotiation_client,
-	["curve-negotiation.server"] = curve_negotiation_server,
+	["alpn.client"] = require("tests.alpn.client"),
+	["alpn.server"] = require("tests.alpn.server"),
+	["chain.client"] = require("tests.chain.client"),
+	["chain.server"] = require("tests.chain.server"),
+	["curve-negotiation.client"] = require("tests.curve-negotiation.client"),
+	["curve-negotiation.server"] = require("tests.curve-negotiation.server"),
+	["dhparam.client"] = require("tests.dhparam.client"),
+	["dhparam.server"] = require("tests.dhparam.server"),
+	["digest.client"] = require("tests.digest.client"),
+	["digest.server"] = require("tests.digest.server"),
+	["ecdh.client"] = require("tests.ecdh.client"),
+	["ecdh.server"] = require("tests.ecdh.server"),
+	["info.client"] = require("tests.info.client"),
+	["info.server"] = require("tests.info.server"),
+	["loop.client"] = require("tests.loop.client"),
+	["loop.server"] = require("tests.loop.server"),
+	["loop-gc.client"] = require("tests.loop-gc.client"),
+	["loop-gc.server"] = require("tests.loop-gc.server"),
+	-- ["luaossl.client"] = require("tests.luaossl.client"),
+	-- ["luaossl.server"] = require("tests.luaossl.server"),
+	["multicert.client"] = require("tests.multicert.client"),
+	["multicert.server"] = require("tests.multicert.server"),
+	["oneshot.client"] = require("tests.oneshot.client"),
+	["oneshot.server"] = require("tests.oneshot.server"),
+	["psk.client"] = require("tests.psk.client"),
+	["psk.server"] = require("tests.psk.server"),
+	["sni.client"] = require("tests.sni.client"),
+	["sni.server"] = require("tests.sni.server"),
 
-	["digest.client"] = digest_client,
-	["digest.server"] = digest_server
+	["verify.client"] = require("tests.verify.client"),
+	["verify.server"] = require("tests.verify.server"),
+	["want.client"] = require("tests.want.client"),
+	["want.server"] = require("tests.want.server"),
+	["wantread.client"] = require("tests.wantread.client"),
+	["wantread.server"] = require("tests.wantread.server"),
+	["wantwrite.client"] = require("tests.wantwrite.client"),
+	["wantwrite.server"] = require("tests.wantwrite.server")
 }
 
 local click_event = hash("click")
@@ -27,11 +45,18 @@ local picked_node
 
 local function node_clicked(node)
 	local id = btns[node]
+	print("Button clicked:" .. id)
 	local selected_module = mappings[id]
 	if selected_module then
-		selected_module.test()
+		print("Selected module: " .. selected_module.name)
+		if not selected_module.precondition_check or selected_module.precondition_check() then
+			print("Run test: " .. id)
+			selected_module.test()
+		else
+			print("[WARN] Precondition check failed!")
+		end
 	else
-		print("No module registerd with id: " .. id)
+		print("[WARN] No module registerd with id: " .. id)
 	end
 end
 

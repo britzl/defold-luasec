@@ -5,26 +5,32 @@ local socket = require("builtins.scripts.socket")
 local ssl    = require("luasec.ssl")
 local config = require("tests.config")
 
-local params = {
-   mode        = "client",
-   protocol    = "tlsv1_2",
-   key         = config.certs .. "clientECDSAkey.pem",
-   certificate = config.certs .. "clientECDSA.pem",
-   verify      = "none",
-   options     = "all",
-   ciphers     = "ALL:!aRSA"
-}
+local M = {}
 
-local peer = socket.tcp()
-peer:connect(config.serverIP, config.serverPort)
+function M.run()
+   local params = {
+      mode        = "client",
+      protocol    = "tlsv1_2",
+      key         = sys.load_resource(config.certs .. "clientECDSAkey.pem"),
+      certificate = sys.load_resource(config.certs .. "clientECDSA.pem"),
+      verify      = "none",
+      options     = "all",
+      ciphers     = "ALL:!aRSA"
+   }
 
--- [[ SSL wrapper
-peer = assert( ssl.wrap(peer, params) )
-assert(peer:dohandshake())
---]]
+   local peer = socket.tcp()
+   peer:connect(config.serverIP, config.serverPort)
 
-local i = peer:info()
-for k, v in pairs(i) do print(k, v) end
+   -- [[ SSL wrapper
+   peer = assert( ssl.wrap(peer, params) )
+   assert(peer:dohandshake())
+   --]]
 
-print(peer:receive("*l"))
-peer:close()
+   local i = peer:info()
+   for k, v in pairs(i) do print(k, v) end
+
+   print(peer:receive("*l"))
+   peer:close()
+end
+
+return M

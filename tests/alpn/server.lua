@@ -67,7 +67,7 @@ function alpnServer.test()
 
    local server = socket.tcp()
    server:setoption('reuseaddr', true)
-   assert( server:bind("*", config.serverPort) )
+   assert( server:bind(config.serverBindAddress, config.serverPort) )
    server:listen()
 
    local peer = server:accept()
