@@ -526,71 +526,6 @@ nodes {
 nodes {
   position {
     x: 549.0
-    y: 547.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "luaossl.client"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "Client"
-  font: "default"
-  id: "text19"
-  parent: "luaossl.client"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 660.0
-    y: 547.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "luaossl.server"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  type: TYPE_TEXT
-  text: "Server"
-  font: "default"
-  id: "text20"
-  parent: "luaossl.server"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 549.0
     y: 443.0
   }
   size {
@@ -785,7 +720,7 @@ nodes {
 }
 nodes {
   position {
-    x: 549.0
+    x: 306.0
     y: 99.0
   }
   size {
@@ -815,7 +750,7 @@ nodes {
 }
 nodes {
   position {
-    x: 660.0
+    x: 417.0
     y: 99.0
   }
   size {
@@ -850,73 +785,8 @@ nodes {
 }
 nodes {
   position {
-    x: 789.0
-    y: 547.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "verification.client"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "Client"
-  font: "default"
-  id: "text29"
-  parent: "verification.client"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 900.0
-    y: 547.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "verification.server"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  type: TYPE_TEXT
-  text: "Server"
-  font: "default"
-  id: "text30"
-  parent: "verification.server"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 789.0
-    y: 443.0
+    x: 549.0
+    y: 546.0
   }
   size {
     x: 100.0
@@ -945,8 +815,8 @@ nodes {
 }
 nodes {
   position {
-    x: 900.0
-    y: 443.0
+    x: 660.0
+    y: 546.0
   }
   size {
     x: 100.0
@@ -980,8 +850,8 @@ nodes {
 }
 nodes {
   position {
-    x: 789.0
-    y: 327.0
+    x: 549.0
+    y: 99.0
   }
   size {
     x: 100.0
@@ -1010,8 +880,8 @@ nodes {
 }
 nodes {
   position {
-    x: 900.0
-    y: 327.0
+    x: 660.0
+    y: 99.0
   }
   size {
     x: 100.0
@@ -1046,7 +916,7 @@ nodes {
 nodes {
   position {
     x: 789.0
-    y: 215.0
+    y: 546.0
   }
   size {
     x: 100.0
@@ -1076,7 +946,7 @@ nodes {
 nodes {
   position {
     x: 900.0
-    y: 215.0
+    y: 546.0
   }
   size {
     x: 100.0
@@ -1111,7 +981,7 @@ nodes {
 nodes {
   position {
     x: 789.0
-    y: 99.0
+    y: 442.0
   }
   size {
     x: 100.0
@@ -1141,7 +1011,7 @@ nodes {
 nodes {
   position {
     x: 900.0
-    y: 99.0
+    y: 442.0
   }
   size {
     x: 100.0
@@ -1311,21 +1181,6 @@ nodes {
 nodes {
   position {
     x: 604.0
-    y: 608.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "luaossl"
-  font: "default"
-  id: "luaossl"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 604.0
     y: 495.0
   }
   size {
@@ -1370,7 +1225,7 @@ nodes {
 }
 nodes {
   position {
-    x: 604.0
+    x: 361.0
     y: 154.0
   }
   size {
@@ -1385,23 +1240,8 @@ nodes {
 }
 nodes {
   position {
-    x: 842.0
-    y: 608.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "verification"
-  font: "default"
-  id: "verification"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 842.0
-    y: 495.0
+    x: 602.0
+    y: 598.0
   }
   size {
     x: 100.0
@@ -1415,8 +1255,8 @@ nodes {
 }
 nodes {
   position {
-    x: 842.0
-    y: 388.0
+    x: 602.0
+    y: 160.0
   }
   size {
     x: 100.0
@@ -1431,7 +1271,7 @@ nodes {
 nodes {
   position {
     x: 842.0
-    y: 269.0
+    y: 600.0
   }
   size {
     x: 100.0
@@ -1446,7 +1286,7 @@ nodes {
 nodes {
   position {
     x: 842.0
-    y: 154.0
+    y: 497.0
   }
   size {
     x: 100.0

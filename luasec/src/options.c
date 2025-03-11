@@ -13,7 +13,7 @@
 
 
 /* 
-  OpenSSL version: OpenSSL 3.0.8
+  OpenSSL version: Unknown
 */
 
 static lsec_ssl_option_t ssl_options[] = {
@@ -52,6 +52,9 @@ static lsec_ssl_option_t ssl_options[] = {
 #endif
 #if defined(SSL_OP_ENABLE_KTLS)
   {"enable_ktls", SSL_OP_ENABLE_KTLS},
+#endif
+#if defined(SSL_OP_ENABLE_KTLS_TX_ZEROCOPY_SENDFILE)
+  {"enable_ktls_tx_zerocopy_sendfile", SSL_OP_ENABLE_KTLS_TX_ZEROCOPY_SENDFILE},
 #endif
 #if defined(SSL_OP_ENABLE_MIDDLEBOX_COMPAT)
   {"enable_middlebox_compat", SSL_OP_ENABLE_MIDDLEBOX_COMPAT},
@@ -113,6 +116,9 @@ static lsec_ssl_option_t ssl_options[] = {
 #if defined(SSL_OP_NO_RENEGOTIATION)
   {"no_renegotiation", SSL_OP_NO_RENEGOTIATION},
 #endif
+#if defined(SSL_OP_NO_RX_CERTIFICATE_COMPRESSION)
+  {"no_rx_certificate_compression", SSL_OP_NO_RX_CERTIFICATE_COMPRESSION},
+#endif
 #if defined(SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION)
   {"no_session_resumption_on_renegotiation", SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION},
 #endif
@@ -140,11 +146,17 @@ static lsec_ssl_option_t ssl_options[] = {
 #if defined(SSL_OP_NO_TLSv1_3)
   {"no_tlsv1_3", SSL_OP_NO_TLSv1_3},
 #endif
+#if defined(SSL_OP_NO_TX_CERTIFICATE_COMPRESSION)
+  {"no_tx_certificate_compression", SSL_OP_NO_TX_CERTIFICATE_COMPRESSION},
+#endif
 #if defined(SSL_OP_PKCS1_CHECK_1)
   {"pkcs1_check_1", SSL_OP_PKCS1_CHECK_1},
 #endif
 #if defined(SSL_OP_PKCS1_CHECK_2)
   {"pkcs1_check_2", SSL_OP_PKCS1_CHECK_2},
+#endif
+#if defined(SSL_OP_PREFER_NO_DHE_KEX)
+  {"prefer_no_dhe_kex", SSL_OP_PREFER_NO_DHE_KEX},
 #endif
 #if defined(SSL_OP_PRIORITIZE_CHACHA)
   {"prioritize_chacha", SSL_OP_PRIORITIZE_CHACHA},
