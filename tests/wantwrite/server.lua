@@ -37,7 +37,7 @@ function wantWriteServer.test()
       assert( peer:dohandshake() )
    --]]
 
-   while true do
+   for _ = 1, 100000 do
       local str = peer:receive("*l")
       print(str)
    end

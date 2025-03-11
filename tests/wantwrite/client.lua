@@ -9,7 +9,6 @@ local wantWriteClient = {}
 
 wantWriteClient.name = "wantwrite.client"
 
-
 function wantWriteClient.test()
    local params = {
       mode = "client",
@@ -43,10 +42,10 @@ function wantWriteClient.test()
    peer:settimeout(0.3)
 
    local str = "a rose is a rose is a rose is a...\n"
-   while true do
+   for _ = 1, 10000 do
       print("Sending...")
       local succ, err = peer:send(str)
-      while succ do
+      for _ = 1, 1000 do
          succ, err = peer:send(str)
       end
       print("Waiting...", err)

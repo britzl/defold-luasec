@@ -32,13 +32,6 @@ Directories:
  Test successive connections between the server and the client 
  (to check memory leak).
 
-* loop-gc
- Same of above,  but the connection is not  explicit closed, the gabage
- collector is encharge of that.
-
-* luaossl
- Integration with luaossl.
-
 * multicert
  Support to multiple certificate for dual RSA/ECDSA.
 

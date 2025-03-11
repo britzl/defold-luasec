@@ -525,71 +525,6 @@ nodes {
 }
 nodes {
   position {
-    x: 308.0
-    y: 99.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "loop-gc.client"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "Client"
-  font: "default"
-  id: "text17"
-  parent: "loop-gc.client"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 419.0
-    y: 99.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.6
-    y: 0.6
-    z: 0.6
-  }
-  type: TYPE_BOX
-  id: "loop-gc.server"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  type: TYPE_TEXT
-  text: "Server"
-  font: "default"
-  id: "text18"
-  parent: "loop-gc.server"
-  inherit_alpha: true
-}
-nodes {
-  position {
     x: 549.0
     y: 547.0
   }
@@ -1371,21 +1306,6 @@ nodes {
   text: "loop"
   font: "default"
   id: "loop"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 362.0
-    y: 154.0
-  }
-  size {
-    x: 100.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "loop-gc"
-  font: "default"
-  id: "loop-gc"
   inherit_alpha: true
 }
 nodes {

@@ -40,7 +40,7 @@ function wantClient.test()
          socket.select(nil, {peer})
       else
          peer:close()
-         os.exit(1)
+         error("")
       end
    end
 

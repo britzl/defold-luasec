@@ -7,7 +7,7 @@ local config = require("tests.config")
 
 local wantServer = {}
 
-wantServer.named = "want.server"
+wantServer.name = "want.server"
 
 function wantServer.test()
    local params = {
