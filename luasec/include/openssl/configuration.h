@@ -40,14 +40,26 @@ extern "C" {
 # ifndef OPENSSL_NO_AFALGENG
 #  define OPENSSL_NO_AFALGENG
 # endif
+# ifndef OPENSSL_NO_APPS
+#  define OPENSSL_NO_APPS
+# endif
 # ifndef OPENSSL_NO_ASAN
 #  define OPENSSL_NO_ASAN
+# endif
+# ifndef OPENSSL_NO_ASYNC
+#  define OPENSSL_NO_ASYNC
+# endif
+# ifndef OPENSSL_NO_AUTOERRINIT
+#  define OPENSSL_NO_AUTOERRINIT
 # endif
 # ifndef OPENSSL_NO_BROTLI
 #  define OPENSSL_NO_BROTLI
 # endif
 # ifndef OPENSSL_NO_BROTLI_DYNAMIC
 #  define OPENSSL_NO_BROTLI_DYNAMIC
+# endif
+# ifndef OPENSSL_NO_CAPIENG
+#  define OPENSSL_NO_CAPIENG
 # endif
 # ifndef OPENSSL_NO_CRYPTO_MDEBUG
 #  define OPENSSL_NO_CRYPTO_MDEBUG
@@ -61,14 +73,26 @@ extern "C" {
 # ifndef OPENSSL_NO_DEVCRYPTOENG
 #  define OPENSSL_NO_DEVCRYPTOENG
 # endif
+# ifndef OPENSSL_NO_DOCS
+#  define OPENSSL_NO_DOCS
+# endif
 # ifndef OPENSSL_NO_EC_NISTP_64_GCC_128
 #  define OPENSSL_NO_EC_NISTP_64_GCC_128
 # endif
 # ifndef OPENSSL_NO_EGD
 #  define OPENSSL_NO_EGD
 # endif
+# ifndef OPENSSL_NO_ENGINE
+#  define OPENSSL_NO_ENGINE
+# endif
+# ifndef OPENSSL_NO_ERR
+#  define OPENSSL_NO_ERR
+# endif
 # ifndef OPENSSL_NO_EXTERNAL_TESTS
 #  define OPENSSL_NO_EXTERNAL_TESTS
+# endif
+# ifndef OPENSSL_NO_FILENAMES
+#  define OPENSSL_NO_FILENAMES
 # endif
 # ifndef OPENSSL_NO_FIPS_POST
 #  define OPENSSL_NO_FIPS_POST
@@ -81,6 +105,9 @@ extern "C" {
 # endif
 # ifndef OPENSSL_NO_FUZZ_LIBFUZZER
 #  define OPENSSL_NO_FUZZ_LIBFUZZER
+# endif
+# ifndef OPENSSL_NO_GOST
+#  define OPENSSL_NO_GOST
 # endif
 # ifndef OPENSSL_NO_H3DEMO
 #  define OPENSSL_NO_H3DEMO
@@ -100,6 +127,9 @@ extern "C" {
 # ifndef OPENSSL_NO_MSAN
 #  define OPENSSL_NO_MSAN
 # endif
+# ifndef OPENSSL_NO_PADLOCKENG
+#  define OPENSSL_NO_PADLOCKENG
+# endif
 # ifndef OPENSSL_NO_PIE
 #  define OPENSSL_NO_PIE
 # endif
@@ -109,11 +139,20 @@ extern "C" {
 # ifndef OPENSSL_NO_SCTP
 #  define OPENSSL_NO_SCTP
 # endif
+# ifndef OPENSSL_NO_SSL_TRACE
+#  define OPENSSL_NO_SSL_TRACE
+# endif
 # ifndef OPENSSL_NO_SSL3
 #  define OPENSSL_NO_SSL3
 # endif
 # ifndef OPENSSL_NO_SSL3_METHOD
 #  define OPENSSL_NO_SSL3_METHOD
+# endif
+# ifndef OPENSSL_NO_STDIO
+#  define OPENSSL_NO_STDIO
+# endif
+# ifndef OPENSSL_NO_TESTS
+#  define OPENSSL_NO_TESTS
 # endif
 # ifndef OPENSSL_NO_TFO
 #  define OPENSSL_NO_TFO
@@ -123,6 +162,9 @@ extern "C" {
 # endif
 # ifndef OPENSSL_NO_UBSAN
 #  define OPENSSL_NO_UBSAN
+# endif
+# ifndef OPENSSL_NO_UI_CONSOLE
+#  define OPENSSL_NO_UI_CONSOLE
 # endif
 # ifndef OPENSSL_NO_UNIT_TEST
 #  define OPENSSL_NO_UNIT_TEST
@@ -160,11 +202,11 @@ extern "C" {
  * The following are cipher-specific, but are part of the public API.
  */
 # if !defined(OPENSSL_SYS_UEFI)
-#  undef BN_LLONG
+#  define BN_LLONG
 /* Only one for the following should be defined */
-#  define SIXTY_FOUR_BIT_LONG
+#  undef SIXTY_FOUR_BIT_LONG
 #  undef SIXTY_FOUR_BIT
-#  undef THIRTY_TWO_BIT
+#  define THIRTY_TWO_BIT
 # endif
 
 # define RC4_INT unsigned char
