@@ -1,7 +1,7 @@
 [project]
 title = LuaSecProject
 version = 0.5
-custom_resources = tests/certs/,tests/multicert/certs
+custom_resources = tests/certs/,tests/multicert/certs/,tests/key/,tests/dhparam/
 
 [script]
 shared_state = 1

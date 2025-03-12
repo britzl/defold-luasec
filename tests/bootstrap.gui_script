@@ -30,7 +30,9 @@ local mappings = {
 	["wantread.client"] = require("tests.wantread.client"),
 	["wantread.server"] = require("tests.wantread.server"),
 	["wantwrite.client"] = require("tests.wantwrite.client"),
-	["wantwrite.server"] = require("tests.wantwrite.server")
+	["wantwrite.server"] = require("tests.wantwrite.server"),
+
+	["loadkey"] = require("tests.key.loadkey")
 }
 
 local click_event = hash("click")

@@ -3,27 +3,29 @@
 --
 local ssl = require("luasec.ssl")
 
-local pass = "foobar"
-local cfg = {
-  protocol = "tlsv1",
-  mode = "client",
-  key = "key.pem",
-}
+local M = {}
 
--- Shell
-print(string.format("*** Hint: password is '%s' ***", pass))
-ctx, err = ssl.newcontext(cfg)
-assert(ctx, err)
-print("Shell: ok")
+M.name = "loadkey"
 
--- Text password
-cfg.password = pass
-ctx, err = ssl.newcontext(cfg)
-assert(ctx, err)
-print("Text: ok")
+function M.test()
+  local pass = "foobar"
+  local cfg = {
+    protocol = "tlsv1",
+    mode = "client",
+    key = sys.load_resource("/tests/key/key.pem"),
+  }
 
--- Callback
-cfg.password = function() return pass end
-ctx, err = ssl.newcontext(cfg)
-assert(ctx, err)
-print("Callback: ok")
+  -- Text password
+  cfg.password = pass
+  ctx, err = ssl.newcontext(cfg)
+  assert(ctx, err)
+  print("Text: ok")
+
+  -- Callback
+  cfg.password = function() return pass end
+  ctx, err = ssl.newcontext(cfg)
+  assert(ctx, err)
+  print("Callback: ok")
+end
+
+return M

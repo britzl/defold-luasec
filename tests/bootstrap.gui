@@ -1363,5 +1363,40 @@ nodes {
   parent: "curve-negotiation.server"
   inherit_alpha: true
 }
+nodes {
+  position {
+    x: 842.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "loadkey"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Load key"
+  font: "default"
+  id: "text17"
+  parent: "loadkey"
+  inherit_alpha: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
