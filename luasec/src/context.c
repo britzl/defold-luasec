@@ -9,7 +9,7 @@
 #include <string.h>
 
 #if defined(WIN32)
-#include <windows.h>
+#include <Windows.h>
 #endif
 
 #include <openssl/ssl.h>

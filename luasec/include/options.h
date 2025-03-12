@@ -12,7 +12,7 @@
 
 struct lsec_ssl_option_s {
   const char *name;
-  unsigned long code;
+  uint64_t code;
 };
 
 typedef struct lsec_ssl_option_s lsec_ssl_option_t;

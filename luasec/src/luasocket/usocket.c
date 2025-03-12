@@ -1,3 +1,4 @@
+#if !defined(DM_PLATFORM_WINDOWS)
 /*=========================================================================*\
 * Socket compatibilization module for Unix
 * LuaSocket toolkit
@@ -438,4 +439,4 @@ const char *socket_gaistrerror(int err) {
         default: return gai_strerror(err);
     }
 }
-
+#endif

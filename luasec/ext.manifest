@@ -17,4 +17,5 @@ platforms:
                
     win32:
         context:
+            defines:    ["_WINSOCKAPI_"]
             libs:       ["Crypt32"]

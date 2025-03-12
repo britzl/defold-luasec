@@ -11,7 +11,7 @@
 #include "luasocket/timeout.h"
 
 #ifdef _WIN32
-#include <windows.h>
+#include <Windows.h>
 #else
 #include <time.h>
 #include <sys/time.h>
