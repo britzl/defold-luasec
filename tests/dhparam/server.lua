@@ -6,7 +6,7 @@ local ssl    = require("luasec.ssl")
 local config = require("tests.config")
 
 local function readfile(filename)
-  local dh = sys.load_resource(config.certs .. filename)
+  local dh = sys.load_resource("/tests/dhparam/" .. filename)
   assert(dh)
   return dh
 end
@@ -17,15 +17,8 @@ local function dhparam_cb(export, keylength)
   print("Export", export)
   print("Key length", keylength)
   print("---")
-  local filename
-  if keylength == 512 then
-    filename = "dh-512.pem"
-  elseif keylength == 1024 then
-    filename = "dh-1024.pem"
-  else
-    -- No key
-    return nil
-  end
+  -- always return key with length 2048 because less length is unsupported in current OpenSSL version
+  local filename = "dh-2048.pem"
   return readfile(filename)
 end
 
@@ -36,7 +29,7 @@ dhparamServer.name = "dhparam.server"
 function dhparamServer.test()
   local params = {
     mode = "server",
-    protocol = "any",
+    protocol = "tlsv1_2",
     key = sys.load_resource(config.certs .. "serverAkey.pem"),
     certificate = sys.load_resource(config.certs .. "serverA.pem"),
     cafile = sys.load_resource(config.certs .. "rootA.pem"),
@@ -61,7 +54,7 @@ function dhparamServer.test()
   -- [[ SSL wrapper
   peer = assert( ssl.wrap(peer, ctx) )
   assert( peer:dohandshake() )
-  --]]
+  -- --]]
 
   peer:send("oneshot test\n")
   peer:close()

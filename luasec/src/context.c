@@ -199,6 +199,7 @@ static DH *dhparam_cb(SSL *ssl, int is_export, int keylength)
 {
   BIO *bio;
   lua_State *L;
+  DH *dh_tmp = NULL;
   SSL_CTX *ctx = SSL_get_SSL_CTX(ssl);
   p_context pctx = (p_context)SSL_CTX_get_app_data(ctx);
 
@@ -209,13 +210,11 @@ static DH *dhparam_cb(SSL *ssl, int is_export, int keylength)
   lua_pushlightuserdata(L, (void*)ctx);
   lua_gettable(L, -2);
 
-  printf("%s", "Callback invoke");
   /* Invoke the callback */
   lua_pushboolean(L, is_export);
   lua_pushnumber(L, keylength);
   lua_call(L, 2, 1);
 
-  printf("%s", "After Callback invoke");
   /* Load parameters from returned value */
   if (lua_type(L, -1) != LUA_TSTRING) {
     lua_pop(L, 2);  /* Remove values from stack */
@@ -224,12 +223,20 @@ static DH *dhparam_cb(SSL *ssl, int is_export, int keylength)
 
   bio = BIO_new_mem_buf((void*)lua_tostring(L, -1), lua_rawlen(L, -1));
   if (bio) {
-    pctx->dh_param = PEM_read_bio_DHparams(bio, NULL, NULL, NULL);
+    dh_tmp = PEM_read_bio_DHparams(bio, NULL, NULL, NULL);
     BIO_free(bio);
   }
 
+  /*
+   * OpenSSL exepcts the callback to maintain a reference to the DH*.  So,
+   * cache it here, and clean up the previous set of parameters.  Any remaining
+   * set is cleaned up when destroying the LuaSec context.
+   */
+  if (pctx->dh_param)
+    DH_free(pctx->dh_param);
+  pctx->dh_param = dh_tmp;
   lua_pop(L, 2);    /* Remove values from stack */
-  return pctx->dh_param;
+  return dh_tmp;
 }
 
 /**
@@ -667,9 +674,7 @@ static int set_mode(lua_State *L)
  */
 static int set_dhparam(lua_State *L)
 {
-  printf("%s\n", "0000000000000");
   SSL_CTX *ctx = lsec_checkcontext(L, 1);
-  SSL_CTX_set_tmp_dh_callback(ctx, dhparam_cb);
 
   /* Save callback */
   luaL_getmetatable(L, "SSL:DH:Registry");
@@ -677,6 +682,7 @@ static int set_dhparam(lua_State *L)
   lua_pushvalue(L, 2);
   lua_settable(L, -3);
 
+  SSL_CTX_set_tmp_dh_callback(ctx, dhparam_cb);
   return 0;
 }
 
@@ -1058,6 +1064,10 @@ static int meth_destroy(lua_State *L)
 
     SSL_CTX_free(ctx->context);
     ctx->context = NULL;
+  }
+  if (ctx->dh_param) {
+    DH_free(ctx->dh_param);
+    ctx->dh_param = NULL;
   }
   return 0;
 }

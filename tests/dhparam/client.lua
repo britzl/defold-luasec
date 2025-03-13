@@ -12,7 +12,7 @@ dhparamClient.name = "dhparam.client"
 function dhparamClient.test()
    local params = {
       mode = "client",
-      protocol = "any",
+      protocol = "tlsv1_2",
       key = sys.load_resource(config.certs .. "clientAkey.pem"),
       certificate = sys.load_resource(config.certs .. "clientA.pem"),
       cafile = sys.load_resource(config.certs .. "rootA.pem"),
