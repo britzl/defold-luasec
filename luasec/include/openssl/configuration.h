@@ -27,6 +27,9 @@ extern "C" {
  * OpenSSL was configured with the following options:
  */
 
+# ifndef OPENSSL_SYS_MACOSX
+#  define OPENSSL_SYS_MACOSX 1
+# endif
 # define OPENSSL_CONFIGURED_API 30400
 # ifndef OPENSSL_RAND_SEED_OS
 #  define OPENSSL_RAND_SEED_OS
@@ -48,9 +51,6 @@ extern "C" {
 # endif
 # ifndef OPENSSL_NO_ASYNC
 #  define OPENSSL_NO_ASYNC
-# endif
-# ifndef OPENSSL_NO_AUTOERRINIT
-#  define OPENSSL_NO_AUTOERRINIT
 # endif
 # ifndef OPENSSL_NO_BROTLI
 #  define OPENSSL_NO_BROTLI
@@ -84,9 +84,6 @@ extern "C" {
 # endif
 # ifndef OPENSSL_NO_ENGINE
 #  define OPENSSL_NO_ENGINE
-# endif
-# ifndef OPENSSL_NO_ERR
-#  define OPENSSL_NO_ERR
 # endif
 # ifndef OPENSSL_NO_EXTERNAL_TESTS
 #  define OPENSSL_NO_EXTERNAL_TESTS
@@ -202,14 +199,14 @@ extern "C" {
  * The following are cipher-specific, but are part of the public API.
  */
 # if !defined(OPENSSL_SYS_UEFI)
-#  define BN_LLONG
+#  undef BN_LLONG
 /* Only one for the following should be defined */
-#  undef SIXTY_FOUR_BIT_LONG
+#  define SIXTY_FOUR_BIT_LONG
 #  undef SIXTY_FOUR_BIT
-#  define THIRTY_TWO_BIT
+#  undef THIRTY_TWO_BIT
 # endif
 
-# define RC4_INT unsigned char
+# define RC4_INT unsigned int
 
 # if defined(OPENSSL_NO_COMP) || (defined(OPENSSL_NO_BROTLI) && defined(OPENSSL_NO_ZSTD) && defined(OPENSSL_NO_ZLIB))
 #  define OPENSSL_NO_COMP_ALG
