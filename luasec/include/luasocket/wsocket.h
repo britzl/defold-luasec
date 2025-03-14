@@ -8,9 +8,8 @@
 /*=========================================================================*\
 * WinSock include files
 \*=========================================================================*/
-//#include <WinSock2.h>
+#include <WinSock2.h>
 #include <WS2tcpip.h>
-//#include <Windows.h>
 
 typedef int socklen_t;
 typedef SOCKADDR_STORAGE t_sockaddr_storage;

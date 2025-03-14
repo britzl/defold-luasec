@@ -1,5 +1,3 @@
-
-
 #if defined(WIN32)
 #include <WinSock2.h>
 #include <Windows.h>
@@ -7,28 +5,34 @@
 
 // include the Defold SDK
 #include <dmsdk/sdk.h>
-#include "config.h"
+#include "compat.h"
 
-#if defined(DM_PLATFORM_HTML5) != true
+#if !defined(DM_PLATFORM_HTML5)
 #include "ssl.h"
 #include "context.h"
 #include "x509.h"
+#include "config.h"
 
 static void LuaInit(lua_State* L)
 {
     int top = lua_gettop(L);
 
     luaopen_ssl_core(L);
-    //printf("%d\n", lua_gettop(L));
+    // printf("%d\n", lua_gettop(L));
     lua_pop(L, 4);
 
     luaopen_ssl_context(L);
-    //printf("%d\n", lua_gettop(L));
-    lua_pop(L, 5);
+    // printf("%d\n", lua_gettop(L));
+
+    lua_pop(L, 7);
 
     luaopen_ssl_x509(L);
-    //printf("%d\n", lua_gettop(L));
+    // printf("%d\n", lua_gettop(L));
     lua_pop(L, 3);
+
+    luaopen_ssl_config(L);
+    // printf("%d\n", lua_gettop(L));
+    lua_pop(L, 2);
 
     assert(top == lua_gettop(L));
 }

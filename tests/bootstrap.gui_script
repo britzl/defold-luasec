@@ -1,0 +1,89 @@
+local mappings = {
+	["alpn.client"] = require("tests.alpn.client"),
+	["alpn.server"] = require("tests.alpn.server"),
+	["chain.client"] = require("tests.chain.client"),
+	["chain.server"] = require("tests.chain.server"),
+	["curve-negotiation.client"] = require("tests.curve-negotiation.client"),
+	["curve-negotiation.server"] = require("tests.curve-negotiation.server"),
+	["dhparam.client"] = require("tests.dhparam.client"),
+	["dhparam.server"] = require("tests.dhparam.server"),
+	["digest.client"] = require("tests.digest.client"),
+	["digest.server"] = require("tests.digest.server"),
+	["ecdh.client"] = require("tests.ecdh.client"),
+	["ecdh.server"] = require("tests.ecdh.server"),
+	["info.client"] = require("tests.info.client"),
+	["info.server"] = require("tests.info.server"),
+	["loop.client"] = require("tests.loop.client"),
+	["loop.server"] = require("tests.loop.server"),
+	["multicert.client"] = require("tests.multicert.client"),
+	["multicert.server"] = require("tests.multicert.server"),
+	["oneshot.client"] = require("tests.oneshot.client"),
+	["oneshot.server"] = require("tests.oneshot.server"),
+	["psk.client"] = require("tests.psk.client"),
+	["psk.server"] = require("tests.psk.server"),
+	["sni.client"] = require("tests.sni.client"),
+	["sni.server"] = require("tests.sni.server"),
+	["verify.client"] = require("tests.verify.client"),
+	["verify.server"] = require("tests.verify.server"),
+	["want.client"] = require("tests.want.client"),
+	["want.server"] = require("tests.want.server"),
+	["wantread.client"] = require("tests.wantread.client"),
+	["wantread.server"] = require("tests.wantread.server"),
+	["wantwrite.client"] = require("tests.wantwrite.client"),
+	["wantwrite.server"] = require("tests.wantwrite.server"),
+
+	["loadkey"] = require("tests.key.loadkey")
+}
+
+local click_event = hash("click")
+
+local btns = {}
+local picked_node
+
+local function node_clicked(node)
+	local id = btns[node]
+	print("Button clicked:" .. id)
+	local selected_module = mappings[id]
+	if selected_module then
+		print("Selected module: " .. selected_module.name)
+		if not selected_module.precondition_check or selected_module.precondition_check() then
+			print("========= Run test: " .. id)
+			selected_module.test()
+			print("========= Completed")
+		else
+			print("[WARN] Precondition check failed!")
+		end
+	else
+		print("[WARN] No module registerd with id: " .. id)
+	end
+end
+
+function init(self)
+	for key, _ in pairs(mappings) do
+		btns[gui.get_node(key)] = key
+	end
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == click_event then
+		if action.pressed then
+			for btn, _ in pairs(btns) do
+				if gui.pick_node(btn, action.x, action.y) then
+					picked_node = btn
+				end
+			end
+		elseif action.released then
+			for btn, _ in pairs(btns) do
+				if gui.pick_node(btn, action.x, action.y) and picked_node == btn then
+					node_clicked(picked_node)
+				end
+			end
+			picked_node = nil
+		end
+	end
+end

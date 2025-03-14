@@ -1,39 +1,39 @@
-loopClient = {}
+--
+-- Public domain
+--
+local socket = require("builtins.scripts.socket")
+local ssl    = require("luasec.ssl")
+local config = require("tests.config")
 
-loopClient.name = "loop.client"
+local infoClient = {}
 
-loopClient.test = function()
-	local socket = require("builtins.scripts.socket")
-	local ssl = require("luasec.ssl")
-	local config = require("tests.config")
-		
-	local params = {
-	   mode = "client",
-	   protocol = "tlsv1_2",
-	   key = sys.load_resource(config.certs .. "clientAkey.pem"),
-	   certificate = sys.load_resource(config.certs .. "clientA.pem"),
-	   cafile = sys.load_resource(config.certs .. "rootA.pem"),
-	   verify = {"peer", "fail_if_no_peer_cert"},
-	   options = "all",
-	}
-	
-	local counter = 1
-	while counter < 11 do
-	   local peer = socket.tcp()
-	   assert( peer:connect(config.serverIP, config.serverPort, 8888) )
-	
-	   -- [[ SSL wrapper
-	   peer = assert( ssl.wrap(peer, params) )
-	   assert( peer:dohandshake() )
-	   --]]
-	
-	   print(counter .. " " .. peer:receive("*l"))
-	   peer:close()
-	   
-	   counter = counter + 1
-	end
+infoClient.name = "info.client"
 
-	return true
+function infoClient.test()
+   local params = {
+      mode = "client",
+      protocol = "tlsv1_2",
+      key = sys.load_resource(config.certs .. "clientAkey.pem"),
+      certificate = sys.load_resource(config.certs .. "clientA.pem"),
+      cafile = sys.load_resource(config.certs .. "rootA.pem"),
+      verify = {"peer", "fail_if_no_peer_cert"},
+      options = "all",
+   }
+
+   while true do
+      local peer = socket.tcp()
+      assert( peer:connect(config.serverIP, config.serverPort) )
+
+      -- [[ SSL wrapper
+      peer = assert( ssl.wrap(peer, params) )
+      assert( peer:dohandshake() )
+      --]]
+
+      peer:getpeercertificate():extensions()
+
+      print(peer:receive("*l"))
+      peer:close()
+   end
 end
 
-return loopClient
+return infoClient

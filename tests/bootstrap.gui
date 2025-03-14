@@ -1,0 +1,1402 @@
+script: "/tests/bootstrap.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 60.0
+    y: 547.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "alpn.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text"
+  parent: "alpn.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 170.0
+    y: 547.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "alpn.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text2"
+  parent: "alpn.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 60.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "chain.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text3"
+  parent: "chain.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 170.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "chain.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text4"
+  parent: "chain.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 60.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "dane.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text5"
+  parent: "dane.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 170.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "dane.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text6"
+  parent: "dane.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 60.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "dhparam.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text7"
+  parent: "dhparam.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 170.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "dhparam.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text8"
+  parent: "dhparam.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 308.0
+    y: 547.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "digest.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text9"
+  parent: "digest.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 419.0
+    y: 547.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "digest.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text10"
+  parent: "digest.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 308.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "ecdh.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text11"
+  parent: "ecdh.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 419.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "ecdh.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text12"
+  parent: "ecdh.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 308.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "info.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text13"
+  parent: "info.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 419.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "info.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text14"
+  parent: "info.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 308.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "loop.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text15"
+  parent: "loop.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 419.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "loop.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text16"
+  parent: "loop.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 549.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "multicert.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text21"
+  parent: "multicert.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 660.0
+    y: 443.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "multicert.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text22"
+  parent: "multicert.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 549.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "oneshot.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text23"
+  parent: "oneshot.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 660.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "oneshot.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text24"
+  parent: "oneshot.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 549.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "psk.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text25"
+  parent: "psk.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 660.0
+    y: 215.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "psk.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text26"
+  parent: "psk.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 306.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "sni.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text27"
+  parent: "sni.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 417.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "sni.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text28"
+  parent: "sni.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 549.0
+    y: 546.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "verify.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text31"
+  parent: "verify.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 660.0
+    y: 546.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "verify.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text32"
+  parent: "verify.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 549.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "want.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text33"
+  parent: "want.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 660.0
+    y: 99.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "want.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text34"
+  parent: "want.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 789.0
+    y: 546.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "wantread.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text35"
+  parent: "wantread.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 900.0
+    y: 546.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "wantread.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text36"
+  parent: "wantread.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 789.0
+    y: 442.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "wantwrite.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text37"
+  parent: "wantwrite.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 900.0
+    y: 442.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "wantwrite.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text38"
+  parent: "wantwrite.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 608.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "alpn"
+  font: "default"
+  id: "alpn"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 495.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "chain"
+  font: "default"
+  id: "chain"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 388.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "curve-negotiation"
+  font: "default"
+  id: "curve-negotiation"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 269.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "dane"
+  font: "default"
+  id: "dane"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 154.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "dhparam"
+  font: "default"
+  id: "dhparam"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 362.0
+    y: 608.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "digest"
+  font: "default"
+  id: "digest"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 362.0
+    y: 495.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "ecdh"
+  font: "default"
+  id: "ecdh"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 362.0
+    y: 388.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "info"
+  font: "default"
+  id: "info"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 362.0
+    y: 269.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "loop"
+  font: "default"
+  id: "loop"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 604.0
+    y: 495.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "multicert"
+  font: "default"
+  id: "multicert"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 604.0
+    y: 388.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "oneshot"
+  font: "default"
+  id: "oneshot"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 604.0
+    y: 269.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "psk"
+  font: "default"
+  id: "psk"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 361.0
+    y: 154.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "sni"
+  font: "default"
+  id: "sni"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 602.0
+    y: 598.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "verify"
+  font: "default"
+  id: "verify"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 602.0
+    y: 160.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "want"
+  font: "default"
+  id: "want"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 842.0
+    y: 600.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "wantread"
+  font: "default"
+  id: "wantread"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 842.0
+    y: 497.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "wantwrite"
+  font: "default"
+  id: "wantwrite"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 60.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "curve-negotiation.client"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Client"
+  font: "default"
+  id: "text1"
+  parent: "curve-negotiation.client"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 170.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "curve-negotiation.server"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Server"
+  font: "default"
+  id: "text39"
+  parent: "curve-negotiation.server"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 842.0
+    y: 327.0
+  }
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "loadkey"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 100.0
+    y: 50.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Load key"
+  font: "default"
+  id: "text17"
+  parent: "loadkey"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

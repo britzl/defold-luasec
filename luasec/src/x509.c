@@ -1,8 +1,8 @@
 /*--------------------------------------------------------------------------
- * LuaSec 0.6
+ * LuaSec 1.3.2
  *
- * Copyright (C) 2014-2016 Kim Alvefur, Paul Aurich, Tobias Markmann
- *                         Matthew Wild, Bruno Silvestre.
+ * Copyright (C) 2014-2023 Kim Alvefur, Paul Aurich, Tobias Markmann, Matthew Wild
+ * Copyright (C) 2014-2023 Bruno Silvestre
  *
  *--------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@
 
 #if defined(WIN32)
 #include <WS2tcpip.h>
-//#include <Windows.h>
+#include <Windows.h>
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -19,30 +19,24 @@
 #include <arpa/inet.h>
 #endif
 
-#include "openssl/ssl.h"
-#include "openssl/x509v3.h"
-#include "openssl/evp.h"
-#include "openssl/err.h"
-#include "openssl/asn1.h"
-#include "openssl/bio.h"
-#include "openssl/bn.h"
+#include <openssl/ssl.h>
+#include <openssl/x509v3.h>
+#include <openssl/evp.h>
+#include <openssl/err.h>
+#include <openssl/asn1.h>
+#include <openssl/bio.h>
+#include <openssl/bn.h>
 
-//#include <lua.h>
-//#include <lauxlib.h>
 #include <dmsdk/sdk.h>
 
 #include "x509.h"
 
 
-/*
- * ASN1_STRING_data is deprecated in OpenSSL 1.1.0
- */
-#if OPENSSL_VERSION_NUMBER>=0x1010000fL && !defined(LIBRESSL_VERSION_NUMBER)
-#define LSEC_ASN1_STRING_data(x) ASN1_STRING_get0_data(x)
-#else
-#define LSEC_ASN1_STRING_data(x) ASN1_STRING_data(x)
+#ifndef LSEC_API_OPENSSL_1_1_0
+#define X509_get0_notBefore   X509_get_notBefore
+#define X509_get0_notAfter    X509_get_notAfter
+#define ASN1_STRING_get0_data ASN1_STRING_data
 #endif
-
 
 static const char* hex_tab = "0123456789abcdef";
 
@@ -158,8 +152,7 @@ static void push_asn1_string(lua_State* L, ASN1_STRING *string, int encode)
   }
   switch (encode) {
   case LSEC_AI5_STRING:
-    lua_pushlstring(L, (char*)LSEC_ASN1_STRING_data(string),
-                       ASN1_STRING_length(string));
+    lua_pushlstring(L, (char*)ASN1_STRING_get0_data(string), ASN1_STRING_length(string));
     break;
   case LSEC_UTF8_STRING:
     len = ASN1_STRING_to_UTF8(&data, string);
@@ -175,7 +168,7 @@ static void push_asn1_string(lua_State* L, ASN1_STRING *string, int encode)
 /**
  * Return a human readable time.
  */
-static int push_asn1_time(lua_State *L, ASN1_UTCTIME *tm)
+static int push_asn1_time(lua_State *L, const ASN1_UTCTIME *tm)
 {
   char *tmp;
   long size;
@@ -194,7 +187,7 @@ static void push_asn1_ip(lua_State *L, ASN1_STRING *string)
 {
   int af;
   char dst[INET6_ADDRSTRLEN];
-  unsigned char *ip = (unsigned char*)LSEC_ASN1_STRING_data(string);
+  unsigned char *ip = (unsigned char*)ASN1_STRING_get0_data(string);
   switch(ASN1_STRING_length(string)) {
   case 4:
     af = AF_INET;
@@ -300,7 +293,7 @@ int meth_extensions(lua_State* L)
     extension = X509_get_ext(peer, i);
     if (extension == NULL)
       break;
-    values = (STACK_OF(GENERAL_NAME) *)X509V3_EXT_d2i(extension);
+    values = (STACK_OF(GENERAL_NAME)*)X509V3_EXT_d2i(extension);
     if (values == NULL)
       break;
 
@@ -372,7 +365,9 @@ int meth_extensions(lua_State* L)
         /* not supported */
         break;
       }
+      GENERAL_NAME_free(general_name);
     }
+    sk_GENERAL_NAME_free(values);
     lua_pop(L, 1); /* ret[oid] */
     i++;           /* Next extension */
   }
@@ -489,10 +484,13 @@ static int meth_digest(lua_State* L)
  */
 static int meth_valid_at(lua_State* L)
 {
+  int nb, na;
   X509* cert = lsec_checkx509(L, 1);
   time_t time = luaL_checkinteger(L, 2);
-  lua_pushboolean(L, (X509_cmp_time(X509_get_notAfter(cert), &time)     >= 0
-                      && X509_cmp_time(X509_get_notBefore(cert), &time) <= 0));
+  nb = X509_cmp_time(X509_get0_notBefore(cert), &time);
+  time -= 1;
+  na = X509_cmp_time(X509_get0_notAfter(cert),  &time);
+  lua_pushboolean(L, nb == -1 && na == 1);
   return 1;
 }
 
@@ -520,7 +518,7 @@ static int meth_serial(lua_State *L)
 static int meth_notbefore(lua_State *L)
 {
   X509* cert = lsec_checkx509(L, 1);
-  return push_asn1_time(L, X509_get_notBefore(cert));
+  return push_asn1_time(L, X509_get0_notBefore(cert));
 }
 
 /**
@@ -529,7 +527,7 @@ static int meth_notbefore(lua_State *L)
 static int meth_notafter(lua_State *L)
 {
   X509* cert = lsec_checkx509(L, 1);
-  return push_asn1_time(L, X509_get_notAfter(cert));
+  return push_asn1_time(L, X509_get0_notAfter(cert));
 }
 
 /**
@@ -622,7 +620,11 @@ cleanup:
  */
 static int meth_destroy(lua_State* L)
 {
-  X509_free(lsec_checkx509(L, 1));
+  p_x509 px = lsec_checkp_x509(L, 1);
+  if (px->cert) {
+    X509_free(px->cert);
+    px->cert = NULL;
+  }
   return 0;
 }
 
@@ -652,6 +654,23 @@ static int meth_set_encode(lua_State* L)
   return 1;
 }
 
+#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL)
+/**
+ * Get signature name.
+ */
+static int meth_get_signature_name(lua_State* L)
+{
+  p_x509 px = lsec_checkp_x509(L, 1);
+  int nid = X509_get_signature_nid(px->cert);
+  const char *name = OBJ_nid2sn(nid);
+  if (!name)
+    lua_pushnil(L);
+  else
+    lua_pushstring(L, name);
+  return 1;
+}
+#endif
+
 /*---------------------------------------------------------------------------*/
 
 static int load_cert(lua_State* L)
@@ -680,6 +699,9 @@ static luaL_Reg methods[] = {
   {"digest",     meth_digest},
   {"setencode",  meth_set_encode},
   {"extensions", meth_extensions},
+#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL)
+  {"getsignaturename", meth_get_signature_name},
+#endif
   {"issuer",     meth_issuer},
   {"notbefore",  meth_notbefore},
   {"notafter",   meth_notafter},
@@ -696,6 +718,7 @@ static luaL_Reg methods[] = {
  * X509 metamethods.
  */
 static luaL_Reg meta[] = {
+  {"__close",    meth_destroy},
   {"__gc",       meth_destroy},
   {"__tostring", meth_tostring},
   {NULL, NULL}

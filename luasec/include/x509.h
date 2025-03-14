@@ -1,19 +1,18 @@
 /*--------------------------------------------------------------------------
- * LuaSec 0.6
+ * LuaSec 1.3.2
  *
- * Copyright (C) 2014-2016 Kim Alvefur, Paul Aurich, Tobias Markmann
- *                         Matthew Wild, Bruno Silvestre.
+ * Copyright (C) 2014-2023 Kim Alvefur, Paul Aurich, Tobias Markmann, Matthew Wild
+ * Copyright (C) 2013-2023 Bruno Silvestre
  *
  *--------------------------------------------------------------------------*/
 
 #ifndef LSEC_X509_H
 #define LSEC_X509_H
 
-#include "openssl/x509v3.h"
-//#include <lua.h>
+#include <openssl/x509v3.h>
 #include <dmsdk/sdk.h>
 
-#include "config.h"
+#include "compat.h"
 
 /* We do not support UniversalString nor BMPString as ASN.1 String types */
 enum { LSEC_AI5_STRING, LSEC_UTF8_STRING };

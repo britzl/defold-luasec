@@ -1,7 +1,7 @@
 [project]
 title = LuaSecProject
 version = 0.5
-custom_resources = tests/certs/
+custom_resources = tests/certs/,tests/multicert/certs/,tests/key/,tests/dhparam/
 
 [script]
 shared_state = 1
@@ -10,5 +10,5 @@ shared_state = 1
 include_dirs = luasec
 
 [bootstrap]
-main_collection = /tests/client.collectionc
+main_collection = /tests/bootstrap.collectionc
 

@@ -8,24 +8,14 @@ platforms:
             linkFlags:  ["-w"]
             libs:       []
             
-    arm64-ios:
+    ios:
         context:
             frameworks: []
             flags:      ["-w"]
             linkFlags:  ["-w"]
             libs:       []
-             
-    armv7-ios:
+               
+    win32:
         context:
-            frameworks: []
-            flags:      ["-w"]
-            linkFlags:  ["-w"]
-            libs:       []
-  
-    x86-win32:
-        context:
-            libs:       ["Crypt32"]
-
-    x86_64-win32:
-        context:
+            defines:    ["_WINSOCKAPI_"]
             libs:       ["Crypt32"]

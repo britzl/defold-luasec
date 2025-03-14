@@ -4,7 +4,6 @@
 * Timeout management functions
 * LuaSocket toolkit
 \*=========================================================================*/
-//#include "lua.h"
 #include <dmsdk/sdk.h>
 
 /* timeout control structure */
