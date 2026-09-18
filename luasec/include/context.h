@@ -23,7 +23,11 @@
 typedef struct t_context_ {
   SSL_CTX *context;
   lua_State *L;
+//////// DEFOLD BEGIN
+#ifndef LSEC_API_OPENSSL_3_0
   DH *dh_param;
+#endif
+//////// DEFOLD END
   void *alpn;
   int mode;
 } t_context;

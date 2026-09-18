@@ -13,7 +13,7 @@
 
 
 /* 
-  OpenSSL version: Unknown
+  OpenSSL version: OpenSSL 4.0.2
 */
 
 static lsec_ssl_option_t ssl_options[] = {
@@ -50,6 +50,18 @@ static lsec_ssl_option_t ssl_options[] = {
 #if defined(SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS)
   {"dont_insert_empty_fragments", SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS},
 #endif
+#if defined(SSL_OP_ECH_GREASE)
+  {"ech_grease", SSL_OP_ECH_GREASE},
+#endif
+#if defined(SSL_OP_ECH_GREASE_RETRY_CONFIG)
+  {"ech_grease_retry_config", SSL_OP_ECH_GREASE_RETRY_CONFIG},
+#endif
+#if defined(SSL_OP_ECH_IGNORE_CID)
+  {"ech_ignore_cid", SSL_OP_ECH_IGNORE_CID},
+#endif
+#if defined(SSL_OP_ECH_TRIALDECRYPT)
+  {"ech_trialdecrypt", SSL_OP_ECH_TRIALDECRYPT},
+#endif
 #if defined(SSL_OP_ENABLE_KTLS)
   {"enable_ktls", SSL_OP_ENABLE_KTLS},
 #endif
@@ -64,6 +76,9 @@ static lsec_ssl_option_t ssl_options[] = {
 #endif
 #if defined(SSL_OP_IGNORE_UNEXPECTED_EOF)
   {"ignore_unexpected_eof", SSL_OP_IGNORE_UNEXPECTED_EOF},
+#endif
+#if defined(SSL_OP_LEGACY_EC_POINT_FORMATS)
+  {"legacy_ec_point_formats", SSL_OP_LEGACY_EC_POINT_FORMATS},
 #endif
 #if defined(SSL_OP_LEGACY_SERVER_CONNECT)
   {"legacy_server_connect", SSL_OP_LEGACY_SERVER_CONNECT},
@@ -163,6 +178,9 @@ static lsec_ssl_option_t ssl_options[] = {
 #endif
 #if defined(SSL_OP_SAFARI_ECDHE_ECDSA_BUG)
   {"safari_ecdhe_ecdsa_bug", SSL_OP_SAFARI_ECDHE_ECDSA_BUG},
+#endif
+#if defined(SSL_OP_SERVER_PREFERENCE)
+  {"server_preference", SSL_OP_SERVER_PREFERENCE},
 #endif
 #if defined(SSL_OP_SINGLE_DH_USE)
   {"single_dh_use", SSL_OP_SINGLE_DH_USE},

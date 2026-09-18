@@ -131,7 +131,7 @@ static void to_hex(const char* in, int length, char* out)
  * Converts the ASN1_OBJECT into a textual representation and put it
  * on the Lua stack.
  */
-static void push_asn1_objname(lua_State* L, ASN1_OBJECT *object, int no_name)
+static void push_asn1_objname(lua_State* L, const ASN1_OBJECT *object, int no_name)
 {
   char buffer[256];
   int len = OBJ_obj2txt(buffer, sizeof(buffer), object, no_name);
@@ -142,7 +142,7 @@ static void push_asn1_objname(lua_State* L, ASN1_OBJECT *object, int no_name)
 /**
  * Push the ASN1 string on the stack.
  */
-static void push_asn1_string(lua_State* L, ASN1_STRING *string, int encode)
+static void push_asn1_string(lua_State* L, const ASN1_STRING *string, int encode)
 {
   int len;
   unsigned char *data;
@@ -228,12 +228,12 @@ static int push_subtable(lua_State* L, int idx)
 /**
  * Retrieve the general names from the object.
  */
-static int push_x509_name(lua_State* L, X509_NAME *name, int encode)
+static int push_x509_name(lua_State* L, const X509_NAME *name, int encode)
 {
   int i;
   int n_entries;
-  ASN1_OBJECT *object;
-  X509_NAME_ENTRY *entry;
+  const ASN1_OBJECT *object;
+  const X509_NAME_ENTRY *entry;
   lua_newtable(L);
   n_entries = X509_NAME_entry_count(name);
   for (i = 0; i < n_entries; i++) {
@@ -280,7 +280,13 @@ int meth_extensions(lua_State* L)
   int i = -1;
   int n_general_names;
   OTHERNAME *otherName;
+//////// DEFOLD BEGIN
+#ifdef LSEC_API_OPENSSL_4_0
+  const X509_EXTENSION *extension;
+#else
   X509_EXTENSION *extension;
+#endif
+//////// DEFOLD END
   GENERAL_NAME *general_name;
   STACK_OF(GENERAL_NAME) *values;
   p_x509 px  = lsec_checkp_x509(L, 1);
@@ -487,10 +493,19 @@ static int meth_valid_at(lua_State* L)
   int nb, na;
   X509* cert = lsec_checkx509(L, 1);
   time_t time = luaL_checkinteger(L, 2);
+//////// DEFOLD BEGIN
+#ifdef LSEC_API_OPENSSL_3_0
+  /* Valid when notBefore <= time <= notAfter (-2 means error) */
+  nb = ASN1_TIME_cmp_time_t(X509_get0_notBefore(cert), time);
+  na = ASN1_TIME_cmp_time_t(X509_get0_notAfter(cert),  time);
+  lua_pushboolean(L, (nb == -1 || nb == 0) && (na == 0 || na == 1));
+#else
   nb = X509_cmp_time(X509_get0_notBefore(cert), &time);
   time -= 1;
   na = X509_cmp_time(X509_get0_notAfter(cert),  &time);
   lua_pushboolean(L, nb == -1 && na == 1);
+#endif
+//////// DEFOLD END
   return 1;
 }
 

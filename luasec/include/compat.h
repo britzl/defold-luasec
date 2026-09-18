@@ -60,6 +60,22 @@
 
 //------------------------------------------------------------------------------
 
+//////// DEFOLD BEGIN
+#if !defined(LIBRESSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+#define LSEC_API_OPENSSL_3_0
+#endif
+
+#if !defined(LIBRESSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x40000000L)
+#define LSEC_API_OPENSSL_4_0
+#endif
+
+#ifndef LSEC_API_OPENSSL_3_0
+#define SSL_get1_peer_certificate(s) SSL_get_peer_certificate(s)
+#endif
+//////// DEFOLD END
+
+//------------------------------------------------------------------------------
+
 #if !defined(LIBRESSL_VERSION_NUMBER) && ((OPENSSL_VERSION_NUMBER & 0xFFFFF000L) == 0x10101000L || (OPENSSL_VERSION_NUMBER & 0xFFFFF000L) == 0x30000000L)
 #define LSEC_OPENSSL_ERRNO_BUG
 #endif

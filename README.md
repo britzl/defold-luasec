@@ -1,5 +1,5 @@
 # LuaSec
-This is the LuaSec module for the [Defold game engine](http://www.defold.com), based on [Brunoos' implementation](https://github.com/brunoos/luasec) and OpenSSL 3.4.1.
+This is the LuaSec module for the [Defold game engine](http://www.defold.com), based on [Brunoos' implementation](https://github.com/brunoos/luasec) and OpenSSL 4.0.2.
 
 ## Installation
 You can use LuaSec in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:

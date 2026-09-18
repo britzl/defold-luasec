@@ -192,6 +192,9 @@ static void add_cert_error(lua_State *L, SSL *ssl, int err, int depth)
   lua_pop(L, 3);
 }
 
+//////// DEFOLD BEGIN
+#ifndef LSEC_API_OPENSSL_3_0
+//////// DEFOLD END
 /**
  * Call Lua user function to get the DH key.
  */
@@ -238,6 +241,59 @@ static DH *dhparam_cb(SSL *ssl, int is_export, int keylength)
   lua_pop(L, 2);    /* Remove values from stack */
   return dh_tmp;
 }
+
+//////// DEFOLD BEGIN
+#else
+
+/**
+ * Call Lua user function to get the DH parameters and install them on the
+ * connection. Runs as certificate callback, before the cipher is chosen.
+ */
+static int dhparam_cb(SSL *ssl, void *arg)
+{
+  BIO *bio;
+  lua_State *L;
+  EVP_PKEY *pkey = NULL;
+  SSL_CTX *ctx = SSL_get_SSL_CTX(ssl);
+  p_context pctx = (p_context)SSL_CTX_get_app_data(ctx);
+  (void)arg;
+
+  if (!SSL_is_server(ssl))
+    return 1;
+
+  L = pctx->L;
+
+  /* Get the callback */
+  luaL_getmetatable(L, "SSL:DH:Registry");
+  lua_pushlightuserdata(L, (void*)ctx);
+  lua_gettable(L, -2);
+
+  /* Invoke the callback with the values OpenSSL >= 1.1.0 passed to the
+   * (now deprecated) temporary DH callback: is_export = 0, keylength = 1024 */
+  lua_pushboolean(L, 0);
+  lua_pushnumber(L, 1024);
+  lua_call(L, 2, 1);
+
+  /* Load parameters from returned value */
+  if (lua_type(L, -1) != LUA_TSTRING) {
+    lua_pop(L, 2);  /* Remove values from stack */
+    return 1;
+  }
+
+  bio = BIO_new_mem_buf((void*)lua_tostring(L, -1), lua_rawlen(L, -1));
+  if (bio) {
+    PEM_read_bio_Parameters(bio, &pkey);
+    BIO_free(bio);
+  }
+  lua_pop(L, 2);    /* Remove values from stack */
+
+  /* SSL_set0_tmp_dh_pkey() takes ownership of the key on success */
+  if (pkey && !SSL_set0_tmp_dh_pkey(ssl, pkey))
+    EVP_PKEY_free(pkey);
+  return 1;
+}
+#endif
+//////// DEFOLD END
 
 /**
  * Set the "ignore purpose" before to start verifing the certificate chain.
@@ -424,7 +480,11 @@ static int use_certificate_chain_file(SSL_CTX *ctx, BIO *cbio)
     x = PEM_read_bio_X509_AUX(cbio, NULL, passwd_callback,
                               passwd_callback_userdata);
     if (x == NULL) {
+#ifdef LSEC_API_OPENSSL_3_0
+        ERR_raise(ERR_LIB_SSL, ERR_R_PEM_LIB);
+#else
         SSLerr(SSL_F_USE_CERTIFICATE_CHAIN_FILE, ERR_R_PEM_LIB);
+#endif
         goto end;
     }
 
@@ -682,11 +742,20 @@ static int set_dhparam(lua_State *L)
   lua_pushvalue(L, 2);
   lua_settable(L, -3);
 
+//////// DEFOLD BEGIN
+#ifndef LSEC_API_OPENSSL_3_0
   SSL_CTX_set_tmp_dh_callback(ctx, dhparam_cb);
+#else
+  SSL_CTX_set_cert_cb(ctx, dhparam_cb, NULL);
+#endif
+//////// DEFOLD END
   return 0;
 }
 
 #if !defined(OPENSSL_NO_EC)
+//////// DEFOLD BEGIN
+#ifndef LSEC_API_OPENSSL_3_0
+//////// DEFOLD END
 /**
  * Set elliptic curve.
  */
@@ -721,6 +790,39 @@ static int set_curve(lua_State *L)
   lua_pushboolean(L, 1);
   return 1;
 }
+
+//////// DEFOLD BEGIN
+#else
+
+/**
+ * Set elliptic curve (restricts the supported groups to a single curve).
+ */
+static int set_curve(lua_State *L)
+{
+  int nid;
+  SSL_CTX *ctx = lsec_checkcontext(L, 1);
+  const char *str = luaL_checkstring(L, 2);
+
+  nid = lsec_find_ec_nid(L, str);
+
+  if (nid == NID_undef) {
+    lua_pushboolean(L, 0);
+    lua_pushfstring(L, "elliptic curve '%s' not supported", str);
+    return 2;
+  }
+
+  if (!SSL_CTX_set1_groups(ctx, &nid, 1)) {
+    lua_pushboolean(L, 0);
+    lua_pushfstring(L, "error setting elliptic curve (%s)",
+      ERR_reason_error_string(ERR_get_error()));
+    return 2;
+  }
+
+  lua_pushboolean(L, 1);
+  return 1;
+}
+#endif
+//////// DEFOLD END
 
 /**
  * Set elliptic curves list.
@@ -1065,10 +1167,14 @@ static int meth_destroy(lua_State *L)
     SSL_CTX_free(ctx->context);
     ctx->context = NULL;
   }
+//////// DEFOLD BEGIN
+#ifndef LSEC_API_OPENSSL_3_0
   if (ctx->dh_param) {
     DH_free(ctx->dh_param);
     ctx->dh_param = NULL;
   }
+#endif
+//////// DEFOLD END
   return 0;
 }
 

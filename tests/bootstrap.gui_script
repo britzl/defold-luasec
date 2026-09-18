@@ -40,9 +40,7 @@ local click_event = hash("click")
 local btns = {}
 local picked_node
 
-local function node_clicked(node)
-	local id = btns[node]
-	print("Button clicked:" .. id)
+local function run_test(id)
 	local selected_module = mappings[id]
 	if selected_module then
 		print("Selected module: " .. selected_module.name)
@@ -58,11 +56,31 @@ local function node_clicked(node)
 	end
 end
 
+local function node_clicked(node)
+	local id = btns[node]
+	print("Button clicked:" .. id)
+	run_test(id)
+end
+
+-- LUASEC_TEST=<id> runs a single test without the UI and exits (used for automated runs)
+local function run_auto_test()
+	local id = os.getenv("LUASEC_TEST")
+	if not id then
+		return
+	end
+	local ok, err = pcall(run_test, id)
+	if not ok then
+		print("[ERROR] " .. tostring(err))
+	end
+	msg.post("@system:", "exit", { code = ok and 0 or 1 })
+end
+
 function init(self)
 	for key, _ in pairs(mappings) do
 		btns[gui.get_node(key)] = key
 	end
 	msg.post(".", "acquire_input_focus")
+	run_auto_test()
 end
 
 function final(self)

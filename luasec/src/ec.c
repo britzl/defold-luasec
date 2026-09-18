@@ -11,7 +11,8 @@
 
 #ifndef OPENSSL_NO_EC
 
-EC_KEY *lsec_find_ec_key(lua_State *L, const char *str)
+//////// DEFOLD BEGIN
+int lsec_find_ec_nid(lua_State *L, const char *str)
 {
   int nid;
   lua_pushstring(L, "SSL:EC:CURVES");
@@ -19,13 +20,22 @@ EC_KEY *lsec_find_ec_key(lua_State *L, const char *str)
   lua_pushstring(L, str);
   lua_rawget(L, -2);
 
-  if (!lua_isnumber(L, -1)) {
+  nid = lua_isnumber(L, -1) ? (int)lua_tonumber(L, -1) : NID_undef;
+  lua_pop(L, 2);
+  return nid;
+}
+
+#ifndef LSEC_API_OPENSSL_3_0
+EC_KEY *lsec_find_ec_key(lua_State *L, const char *str)
+{
+  int nid = lsec_find_ec_nid(L, str);
+  if (nid == NID_undef) {
     return NULL;
   }
-
-  nid = (int)lua_tonumber(L, -1);
   return EC_KEY_new_by_curve_name(nid);
 }
+#endif
+//////// DEFOLD END
 
 void lsec_load_curves(lua_State *L)
 {
